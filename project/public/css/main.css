@@ -1410,6 +1410,12 @@ main {
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%); }
 
-.error-image {
-  width: 50%;
+
+.error__wrapper {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.error__image {
+  width: 40%;
 }

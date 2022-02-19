@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './pages/app/app';
+import App from './components/app/app';
 import { BrowserRouter } from 'react-router-dom';
 
 export const promoFilm = {
