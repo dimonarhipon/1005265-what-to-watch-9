@@ -8,6 +8,7 @@ import AddReview from '../../pages/add-review/add-review';
 import Player from '../../pages/player/player';
 import Error from '../error/error';
 import PrivateRoute from '../private-route/private-route';
+import { BrowserRouter } from 'react-router-dom';
 
 type promoFilmProps = {
   title: string,
@@ -17,27 +18,33 @@ type promoFilmProps = {
 
 function App({...promoFilm}: promoFilmProps) {
   return (
-    <Routes>
-      <Route path={AppRoute.Root}>
-        <Route index element={<Main {...promoFilm} />} />
-        <Route path={AppRoute.Login} element={<SingIn />} />
-        <Route
-          path={AppRoute.MyList}
-          element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-              <MyList  />
-            </PrivateRoute>
-          }
-        >
+    <BrowserRouter>
+      <Routes>
+        <Route path={AppRoute.Root}>
+          <Route index element={<Main {...promoFilm} />} />
+          <Route path={AppRoute.Login} element={<SingIn />} />
+          <Route
+            path={AppRoute.MyList}
+            element={
+              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+                <MyList  />
+              </PrivateRoute>
+            }
+          >
+          </Route>
+
+          <Route path={AppRoute.Films}>
+            <Route index element={<Film />} />
+            <Route path={AppRoute.Id} element={<Film />} />
+            <Route path={AppRoute.Review} element={<AddReview />} />
+          </Route>
+
+          <Route path={AppRoute.Player} element={<Player />} />
         </Route>
 
-        <Route path={AppRoute.Films} element={<Film />} />
-        <Route path={AppRoute.Review} element={<AddReview />} />
-        <Route path={AppRoute.Player} element={<Player />} />
-      </Route>
-
-      <Route path='*' element={<Error />} />
-    </Routes>
+        <Route path='*' element={<Error />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

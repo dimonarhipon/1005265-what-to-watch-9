@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import { BrowserRouter } from 'react-router-dom';
 
 export const promoFilm = {
   title: 'The Grand Budapest Hotel',
@@ -11,8 +10,6 @@ export const promoFilm = {
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App {...promoFilm} />
-    </BrowserRouter>
+    <App {...promoFilm} />
   </React.StrictMode>,
   document.getElementById('root'));
