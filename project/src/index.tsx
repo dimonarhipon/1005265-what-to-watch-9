@@ -10,10 +10,6 @@ export const promoFilm = {
 
 ReactDOM.render(
   <React.StrictMode>
-    <App
-      title={promoFilm.title}
-      genre={promoFilm.genre}
-      year={promoFilm.year}
-    />
+    <App {...promoFilm} />
   </React.StrictMode>,
   document.getElementById('root'));

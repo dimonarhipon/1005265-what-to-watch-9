@@ -1,4 +1,5 @@
-import Card from '../card/card';
+import Card from '../../components/card/card';
+import Logo from '../../components/logo/logo';
 
 type promoFilmProps = {
   title: string,
@@ -6,7 +7,7 @@ type promoFilmProps = {
   year: number,
 };
 
-function Main({title, genre, year}: promoFilmProps) {
+function Main({...promoFilm}: promoFilmProps) {
   return (
     <>
       <section className="film-card">
@@ -17,13 +18,7 @@ function Main({title, genre, year}: promoFilmProps) {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header film-card__head">
-          <div className="logo">
-            <a className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
+          <Logo />
 
           <ul className="user-block">
             <li className="user-block__item">
@@ -44,10 +39,10 @@ function Main({title, genre, year}: promoFilmProps) {
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{title}</h2>
+              <h2 className="film-card__title">{promoFilm.title}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{genre}</span>
-                <span className="film-card__year">{year}</span>
+                <span className="film-card__genre">{promoFilm.genre}</span>
+                <span className="film-card__year">{promoFilm.year}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -135,13 +130,7 @@ function Main({title, genre, year}: promoFilmProps) {
         </section>
 
         <footer className="page-footer">
-          <div className="logo">
-            <a className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
+          <Logo isLight />
 
           <div className="copyright">
             <p>© 2019 What to watch Ltd.</p>
