@@ -1,5 +1,7 @@
 import CardList from '../../components/card-list/card-list';
 import Logo from '../../components/logo/logo';
+import {Link} from 'react-router-dom';
+import { AppRoute } from '../../const';
 import {dataFilms} from '../../types/data';
 
 type typeProps = {
@@ -21,7 +23,7 @@ function MyList({films}: typeProps) {
             </div>
           </li>
           <li className="user-block__item">
-            <a className="user-block__link">Sign out</a>
+            <Link to={AppRoute.Login} className="user-block__link">Sign out</Link>
           </li>
         </ul>
       </header>

@@ -1,5 +1,7 @@
+import { Link } from 'react-router-dom';
 import CardList from '../../components/card-list/card-list';
 import Logo from '../../components/logo/logo';
+import { AppRoute } from '../../const';
 import {dataFilms} from '../../types/data';
 
 type typeProps = {
@@ -29,7 +31,7 @@ function Main({films, ...promoFilm}: typeProps) {
               </div>
             </li>
             <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
+              <Link to={AppRoute.Login} className="user-block__link">Sign out</Link>
             </li>
           </ul>
         </header>
@@ -48,18 +50,18 @@ function Main({films, ...promoFilm}: typeProps) {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <Link to={AppRoute.Player} className="btn btn--play film-card__button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
-                </button>
-                <button className="btn btn--list film-card__button" type="button">
+                </Link>
+                <Link to={AppRoute.MyList} className="btn btn--list film-card__button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
-                </button>
+                </Link>
               </div>
             </div>
           </div>
