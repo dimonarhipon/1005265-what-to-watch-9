@@ -1,8 +1,13 @@
 import Logo from '../../components/logo/logo';
-import Card from '../../components/card/card';
+import CardList from '../../components/card-list/card-list';
 import {Link} from 'react-router-dom';
+import {dataFilms} from '../../types/data';
 
-function Film() {
+type typeProps = {
+  films: dataFilms,
+}
+
+function Film({films}: typeProps) {
   return (
     <>
       <section className="film-card film-card--full">
@@ -102,12 +107,7 @@ function Film() {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <div className="catalog__films-list">
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-          </div>
+          <CardList films={films} />
         </section>
 
         <footer className="page-footer">

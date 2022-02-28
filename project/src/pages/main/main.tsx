@@ -1,13 +1,15 @@
-import Card from '../../components/card/card';
+import CardList from '../../components/card-list/card-list';
 import Logo from '../../components/logo/logo';
+import {dataFilms} from '../../types/data';
 
-type promoFilmProps = {
+type typeProps = {
   title: string,
   genre: string,
   year: number,
-};
+  films: dataFilms,
+}
 
-function Main({...promoFilm}: promoFilmProps) {
+function Main({films, ...promoFilm}: typeProps) {
   return (
     <>
       <section className="film-card">
@@ -101,28 +103,7 @@ function Main({...promoFilm}: promoFilmProps) {
             </li>
           </ul>
 
-          <div className="catalog__films-list">
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-          </div>
+          <CardList films={films} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

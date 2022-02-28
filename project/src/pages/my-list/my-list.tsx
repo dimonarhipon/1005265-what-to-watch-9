@@ -1,7 +1,12 @@
-import Card from '../../components/card/card';
+import CardList from '../../components/card-list/card-list';
 import Logo from '../../components/logo/logo';
+import {dataFilms} from '../../types/data';
 
-function MyList() {
+type typeProps = {
+  films: dataFilms,
+}
+
+function MyList({films}: typeProps) {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -25,14 +30,7 @@ function MyList() {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <div className="catalog__films-list">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+          <CardList films={films} />
         </div>
       </section>
 

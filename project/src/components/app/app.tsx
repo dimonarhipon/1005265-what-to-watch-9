@@ -9,33 +9,35 @@ import Player from '../../pages/player/player';
 import Error from '../error/error';
 import PrivateRoute from '../private-route/private-route';
 import { BrowserRouter } from 'react-router-dom';
+import {dataFilms} from '../../types/data';
 
-type promoFilmProps = {
+type typeProps = {
   title: string,
   genre: string,
   year: number,
+  films: dataFilms,
 };
 
-function App({...promoFilm}: promoFilmProps) {
+function App({films, ...promoFilm}: typeProps) {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Root}>
-          <Route index element={<Main {...promoFilm} />} />
+          <Route index element={<Main {...promoFilm} films={films} />} />
           <Route path={AppRoute.Login} element={<SingIn />} />
           <Route
             path={AppRoute.MyList}
             element={
               <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-                <MyList  />
+                <MyList films={films} />
               </PrivateRoute>
             }
           >
           </Route>
 
           <Route path={AppRoute.Films}>
-            <Route index element={<Film />} />
-            <Route path={AppRoute.Id} element={<Film />} />
+            <Route index element={<Film films={films} />} />
+            <Route path={AppRoute.Id} element={<Film films={films} />} />
             <Route path={AppRoute.Review} element={<AddReview />} />
           </Route>
 
