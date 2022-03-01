@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
+import Comment from '../../components/comment/comment';
 import { AppRoute } from '../../const';
 
 type typeProps = {
@@ -87,11 +88,10 @@ function AddReview({...promoFilm}: typeProps) {
           </div>
 
           <div className="add-review__text">
-            <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"></textarea>
+            <Comment />
             <div className="add-review__submit">
               <button className="add-review__btn" type="submit">Post</button>
             </div>
-
           </div>
         </form>
       </div>
