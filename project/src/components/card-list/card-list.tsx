@@ -8,12 +8,9 @@ type typeProps = {
 function CardList({films}: typeProps) {
   return (
     <div className="catalog__films-list">
-      {films.map((film, id) => {
-        const keyValue = `${id}`;
-        return (
-          <Card key={keyValue} {...film} />
-        );
-      })}
+      {films.map((film) => (
+        <Card key={film.name} {...film} />
+      ))}
     </div>
   );
 }

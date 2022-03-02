@@ -35,7 +35,7 @@ function App({films, ...promoFilm}: typeProps) {
             <Route path={AppRoute.Review} element={<AddReview {...promoFilm} />} />
           </Route>
 
-          <Route path={AppRoute.Player} element={<Player />} />
+          <Route path={AppRoute.Player} element={<Player films={films} />} />
         </Route>
 
         <Route path='*' element={<Error />} />

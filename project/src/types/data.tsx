@@ -1,16 +1,11 @@
 export type dataFilm = {
-    id: number,
-    name: string,
-    image: string,
+  id: number,
+  name: string,
+  image: string,
+  videoLink: string,
+  previewVideoLink: string,
 }
 
 export type dataFilms = dataFilm[];
 
-export type dataPlayer = {
-  video: string,
-}
 
-/*
-В стейте компонента должна быть активная карточка с фильмом (объект с данными фильма или лишь уникальный идентификатор фильма). Под активной карточкой фильма подразумевается карточка, на которую пользователь навёл курсор. Состояние пригодится нам в дальнейшем для реализации воспроизведения видео по наведению на карточку фильма.
-
-*/

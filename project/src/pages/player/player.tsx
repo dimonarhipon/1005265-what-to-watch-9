@@ -1,10 +1,16 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import {dataFilms} from '../../types/data';
 
-function Player() {
+type typeProps = {
+  films: dataFilms,
+}
+
+function Player({films}: typeProps) {
+  const {videoLink, image} = films[0];
   return (
     <div className="player">
-      <video src="https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4" className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={videoLink} className="player__video" poster={image}></video>
 
       <Link to={AppRoute.Films} className="player__exit">Exit</Link>
 

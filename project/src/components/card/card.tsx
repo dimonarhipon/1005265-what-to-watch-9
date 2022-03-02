@@ -4,7 +4,7 @@ import { AppRoute } from '../../const';
 import {dataFilm} from '../../types/data';
 
 function Card({...film}: dataFilm) {
-  const {id, name, image} = film;
+  const {id, name, image, previewVideoLink} = film;
   const [isActive, setActive] = useState(false);
 
   const mouseOverHandler = () => setActive(true);
@@ -16,7 +16,7 @@ function Card({...film}: dataFilm) {
       onMouseOver={mouseOverHandler}
       onMouseOut={mouseOutHandler}
     >
-      <video className="visually-hidden" src="">
+      <video className="visually-hidden" src={previewVideoLink}>
         {isActive}
       </video>
       <div className="small-film-card__image">
