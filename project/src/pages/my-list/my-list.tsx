@@ -1,7 +1,14 @@
-import Card from '../../components/card/card';
+import CardList from '../../components/card-list/card-list';
 import Logo from '../../components/logo/logo';
+import {Link} from 'react-router-dom';
+import { AppRoute } from '../../const';
+import {dataFilms} from '../../types/data';
 
-function MyList() {
+type typeProps = {
+  films: dataFilms,
+}
+
+function MyList({films}: typeProps) {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -16,7 +23,7 @@ function MyList() {
             </div>
           </li>
           <li className="user-block__item">
-            <a className="user-block__link">Sign out</a>
+            <Link to={AppRoute.Login} className="user-block__link">Sign out</Link>
           </li>
         </ul>
       </header>
@@ -25,14 +32,7 @@ function MyList() {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <div className="catalog__films-list">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+          <CardList films={films} />
         </div>
       </section>
 
