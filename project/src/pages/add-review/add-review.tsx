@@ -2,20 +2,25 @@ import { Link } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import Review from '../../components/review/review';
 import { AppRoute } from '../../const';
+import {dataFilms} from '../../types/data';
 
 type typeProps = {
-  title: string,
-  genre: string,
-  year: number,
+  films: dataFilms,
 }
 
-function AddReview({...promoFilm}: typeProps) {
-  const {title} = promoFilm;
+
+function AddReview({films}: typeProps) {
+  const {
+    backgroundColor,
+    backgroundImage,
+    name,
+    posterImage,
+  } = films[0];
   return (
-    <section className="film-card film-card--full">
+    <section className="film-card film-card--full" style={{backgroundColor: backgroundColor}}>
       <div className="film-card__header">
         <div className="film-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt={title} />
+          <img src={backgroundImage} alt={name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -26,7 +31,7 @@ function AddReview({...promoFilm}: typeProps) {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={AppRoute.Films} className="breadcrumbs__link">{title}</Link>
+                <Link to={AppRoute.Films} className="breadcrumbs__link">{name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>
@@ -47,7 +52,7 @@ function AddReview({...promoFilm}: typeProps) {
         </header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img src="img/the-grand-budapest-hotel-poster.jpg" alt={`${title} poster`} width="218" height="327" />
+          <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
         </div>
       </div>
 
