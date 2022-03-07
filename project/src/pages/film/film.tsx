@@ -5,20 +5,18 @@ import {Link} from 'react-router-dom';
 import {dataFilms} from '../../types/data';
 
 type typeProps = {
-  title: string,
-  genre: string,
-  year: number,
   films: dataFilms,
+  id?: number,
 }
 
-function Film({films, ...promoFilm}: typeProps) {
-  const {title} = promoFilm;
+function Film({films, id = 3}: typeProps) {
+  const {backgroundColor, backgroundImage, name, genre, released, posterImage, rating, scoresCount, description, director, starring} = films[id];
   return (
     <>
-      <section className="film-card film-card--full">
+      <section className="film-card film-card--full" style={{backgroundColor: backgroundColor}} >
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src="img/bg-the-grand-budapest-hotel.jpg" alt={title} />
+            <img src={backgroundImage} alt={name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -40,10 +38,10 @@ function Film({films, ...promoFilm}: typeProps) {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{title}</h2>
+              <h2 className="film-card__title">{name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">Drama</span>
-                <span className="film-card__year">2014</span>
+                <span className="film-card__genre">{genre}</span>
+                <span className="film-card__year">{released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -68,7 +66,7 @@ function Film({films, ...promoFilm}: typeProps) {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
@@ -87,21 +85,19 @@ function Film({films, ...promoFilm}: typeProps) {
               </nav>
 
               <div className="film-rating">
-                <div className="film-rating__score">8,9</div>
+                <div className="film-rating__score">{rating}</div>
                 <p className="film-rating__meta">
                   <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">240 ratings</span>
+                  <span className="film-rating__count">{scoresCount} ratings</span>
                 </p>
               </div>
 
               <div className="film-card__text">
-                <p>In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave&#39; s friend and protege.</p>
+                <p>{description}</p>
 
-                <p>Gustave prides himself on providing first-className service to the hotel&#39;s guests, including satisfying the sexual needs of the many elderly women who stay there. When one of Gustave&#39;s lovers dies mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her murder.</p>
+                <p className="film-card__director"><strong>Director: {director}</strong></p>
 
-                <p className="film-card__director"><strong>Director: Wes Anderson</strong></p>
-
-                <p className="film-card__starring"><strong>Starring: Bill Murray, Edward Norton, Jude Law, Willem Dafoe and other</strong></p>
+                <p className="film-card__starring"><strong>Starring: {starring.map((item) => item).join(', ')}</strong></p>
               </div>
             </div>
           </div>
@@ -116,13 +112,7 @@ function Film({films, ...promoFilm}: typeProps) {
         </section>
 
         <footer className="page-footer">
-          <div className="logo">
-            <Link to='/' className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </Link>
-          </div>
+          <Logo isLight />
 
           <div className="copyright">
             <p>© 2019 What to watch Ltd.</p>

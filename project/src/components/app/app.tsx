@@ -11,18 +11,15 @@ import { BrowserRouter } from 'react-router-dom';
 import {dataFilms} from '../../types/data';
 
 type typeProps = {
-  title: string,
-  genre: string,
-  year: number,
   films: dataFilms,
 };
 
-function App({films, ...promoFilm}: typeProps) {
+function App({films}: typeProps) {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Root}>
-          <Route index element={<Main {...promoFilm} films={films} />} />
+          <Route index element={<Main films={films} />} />
           <Route path={AppRoute.Login} element={<SingIn />} />
           <Route
             path={AppRoute.MyList}
@@ -30,9 +27,9 @@ function App({films, ...promoFilm}: typeProps) {
           />
 
           <Route path={AppRoute.Films}>
-            <Route index element={<Film {...promoFilm} films={films} />} />
-            <Route path={AppRoute.Id} element={<Film {...promoFilm} films={films} />} />
-            <Route path={AppRoute.Review} element={<AddReview {...promoFilm} />} />
+            <Route index element={<Film films={films} />} />
+            <Route path={AppRoute.Id} element={<Film films={films} />} />
+            <Route path={AppRoute.Review} element={<AddReview films={films} />} />
           </Route>
 
           <Route path={AppRoute.Player} element={<Player films={films} />} />
