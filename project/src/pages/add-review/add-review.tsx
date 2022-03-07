@@ -6,16 +6,17 @@ import {dataFilms} from '../../types/data';
 
 type typeProps = {
   films: dataFilms,
+  id?: number,
 }
 
 
-function AddReview({films}: typeProps) {
+function AddReview({films, id = 3}: typeProps) {
   const {
     backgroundColor,
     backgroundImage,
     name,
     posterImage,
-  } = films[0];
+  } = films[id];
   return (
     <section className="film-card film-card--full" style={{backgroundColor: backgroundColor}}>
       <div className="film-card__header">
