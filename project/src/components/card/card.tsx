@@ -1,27 +1,43 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import {dataFilm} from '../../types/data';
+import VideoPlayer from '../video-player/video-player';
 
-function Card({...film}: dataFilm) {
-  const {id, name, image, previewVideoLink} = film;
-  const [isActive, setActive] = useState(false);
+type Props = {
+  id: number,
+  name: string,
+  image: string,
+  previewVideoLink: string,
+  isActive: boolean,
+  mouseOverHandler: (id: number) => void;
+  mouseOutHandler: (id: number) => void;
+}
 
-  const mouseOverHandler = () => setActive(true);
-  const mouseOutHandler = () => setActive(false);
+const CardSize = {
+  height: 175,
+  width: 280,
+};
+
+function Card({...props}: Props) {
+  const { width, height } = CardSize;
+  const {id, name, image, previewVideoLink, isActive, mouseOverHandler, mouseOutHandler} = props;
 
   return (
     <article
       className="small-film-card catalog__films-card"
-      onMouseOver={mouseOverHandler}
-      onMouseOut={mouseOutHandler}
+      onMouseOver={() => mouseOverHandler(id)}
+      onMouseOut={() => mouseOutHandler(id)}
     >
-      <video className="visually-hidden" src={previewVideoLink}>
-        {isActive}
-      </video>
       <div className="small-film-card__image">
-        <img src={image} alt={name} width="280" height="175" />
+        <VideoPlayer
+          src={previewVideoLink}
+          width={width}
+          height={height}
+          poster={image}
+          isActive={isActive}
+          muted
+        />
       </div>
+
       <h3 className="small-film-card__title">
         <Link to={`${AppRoute.Films}/${id}`} className="small-film-card__link">
           {name}
