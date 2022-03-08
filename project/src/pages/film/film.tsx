@@ -1,8 +1,10 @@
+import {useState, MouseEvent} from 'react';
 import {AppRoute} from '../../const';
 import Logo from '../../components/logo/logo';
 import CardList from '../../components/card-list/card-list';
 import {Link} from 'react-router-dom';
 import {dataFilms} from '../../types/data';
+import Tabs from '../../components/tabs/tabs';
 
 type typeProps = {
   films: dataFilms,
@@ -10,7 +12,15 @@ type typeProps = {
 }
 
 function Film({films, id = 3}: typeProps) {
-  const {backgroundColor, backgroundImage, name, genre, released, posterImage, rating, scoresCount, description, director, starring} = films[id];
+  const [activeTab, setActiveTab] = useState('overview');
+  const {backgroundColor, backgroundImage, name, genre, released, posterImage,
+  } = films[id];
+
+  const changeTabHandler = (evt: MouseEvent) => {
+    evt.preventDefault();
+    setActiveTab(evt.target);
+  };
+
   return (
     <>
       <section className="film-card film-card--full" style={{backgroundColor: backgroundColor}} >
@@ -71,34 +81,20 @@ function Film({films, id = 3}: typeProps) {
 
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
+                <ul className="film-nav__list" onClick={changeTabHandler} >
                   <li className="film-nav__item film-nav__item--active">
-                    <a href="#" className="film-nav__link">Overview</a>
+                    <Link to="#overview" className="film-nav__link">Overview</Link>
                   </li>
                   <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Details</a>
+                    <Link to="#details" className="film-nav__link">Details</Link>
                   </li>
                   <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Reviews</a>
+                    <Link to="#reviews" className="film-nav__link">Reviews</Link>
                   </li>
                 </ul>
               </nav>
-
-              <div className="film-rating">
-                <div className="film-rating__score">{rating}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">{scoresCount} ratings</span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                <p>{description}</p>
-
-                <p className="film-card__director"><strong>Director: {director}</strong></p>
-
-                <p className="film-card__starring"><strong>Starring: {starring.map((item) => item).join(', ')}</strong></p>
-              </div>
+              {activeTab}
+              <Tabs />
             </div>
           </div>
         </div>
