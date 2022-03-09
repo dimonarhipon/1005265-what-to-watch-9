@@ -1,10 +1,18 @@
-function TabDetails() {
+import {dataFilm} from '../../types/data';
+
+type typeProps = {
+  film: dataFilm,
+}
+
+function TabDetails({film}: typeProps) {
+  const {director} = film;
+
   return (
     <div className="film-card__text film-card__row">
       <div className="film-card__text-col">
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Director</strong>
-          <span className="film-card__details-value">Wes Anderson</span>
+          <span className="film-card__details-value">{director}</span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Starring</strong>

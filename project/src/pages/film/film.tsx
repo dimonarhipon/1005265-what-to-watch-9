@@ -1,8 +1,8 @@
-import {useState, MouseEvent} from 'react';
-import {AppRoute} from '../../const';
+import {useState, SyntheticEvent} from 'react';
+import {AppRoute, TabNames} from '../../const';
 import Logo from '../../components/logo/logo';
 import CardList from '../../components/card-list/card-list';
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import {dataFilms} from '../../types/data';
 import Tabs from '../../components/tabs/tabs';
 
@@ -12,13 +12,19 @@ type typeProps = {
 }
 
 function Film({films, id = 3}: typeProps) {
-  const [activeTab, setActiveTab] = useState('overview');
+  const location = useLocation();
+  const [activeTab, setActiveTab] = useState(TabNames.Overview.toString());
   const {backgroundColor, backgroundImage, name, genre, released, posterImage,
   } = films[id];
 
-  const changeTabHandler = (evt: MouseEvent) => {
+  let hash = location.hash.substr(1);
+  if (hash === '') {
+    hash = activeTab;
+  }
+
+  const changeTabHandler = (evt: SyntheticEvent) => {
     evt.preventDefault();
-    setActiveTab(evt.target);
+    setActiveTab(hash);
   };
 
   return (
@@ -82,19 +88,26 @@ function Film({films, id = 3}: typeProps) {
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">
                 <ul className="film-nav__list" onClick={changeTabHandler} >
-                  <li className="film-nav__item film-nav__item--active">
+                  <li
+                    className={`film-nav__item ${hash.includes(TabNames.Overview) ? 'film-nav__item--active' : ''}`}
+                  >
                     <Link to="#overview" className="film-nav__link">Overview</Link>
                   </li>
-                  <li className="film-nav__item">
+
+                  <li
+                    className={`film-nav__item ${hash.includes(TabNames.Details) ? 'film-nav__item--active' : ''}`}
+                  >
                     <Link to="#details" className="film-nav__link">Details</Link>
                   </li>
-                  <li className="film-nav__item">
+
+                  <li
+                    className={`film-nav__item ${hash.includes(TabNames.Reviews) ? 'film-nav__item--active' : ''}`}
+                  >
                     <Link to="#reviews" className="film-nav__link">Reviews</Link>
                   </li>
                 </ul>
               </nav>
-              {activeTab}
-              <Tabs />
+              <Tabs activeTab={activeTab} film={films[id]} />
             </div>
           </div>
         </div>

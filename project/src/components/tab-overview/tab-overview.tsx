@@ -1,9 +1,17 @@
-function TabOverview() {
+import {dataFilm} from '../../types/data';
+
+type typeProps = {
+  film: dataFilm,
+}
+
+function TabOverview({film}: typeProps) {
+  const {rating} = film;
+
   return (
     <>
       <div className="film-rating">
         <div className="film-rating__score">
-          {/* {rating} */}
+          {rating}
         </div>
         <p className="film-rating__meta">
           <span className="film-rating__level">Very good</span>

@@ -1,4 +1,12 @@
-function TabReview() {
+import {dataFilm} from '../../types/data';
+
+type typeProps = {
+  film: dataFilm,
+}
+
+function TabReview({film}: typeProps) {
+  const {rating} = film;
+
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">
@@ -14,7 +22,7 @@ function TabReview() {
             </footer>
           </blockquote>
 
-          <div className="review__rating">8,9</div>
+          <div className="review__rating">{rating}</div>
         </div>
 z
         <div className="review">
