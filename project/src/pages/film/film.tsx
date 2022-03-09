@@ -107,7 +107,7 @@ function Film({films, id = 3}: typeProps) {
                   </li>
                 </ul>
               </nav>
-              <Tabs activeTab={activeTab} film={films[id]} />
+              <Tabs activeTab={hash} film={films[id]} />
             </div>
           </div>
         </div>
