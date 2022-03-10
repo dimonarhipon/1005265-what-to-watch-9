@@ -8,8 +8,8 @@ type Props = {
   image: string,
   previewVideoLink: string,
   isActive: boolean,
-  mouseOverHandler: (id: number) => void;
-  mouseOutHandler: (id: number) => void;
+  mouseEnterHandler: (id: number) => void;
+  mouseLeaveHandler: (id: number) => void;
 }
 
 const CardSize = {
@@ -19,13 +19,13 @@ const CardSize = {
 
 function Card({...props}: Props) {
   const { width, height } = CardSize;
-  const {id, name, image, previewVideoLink, isActive, mouseOverHandler, mouseOutHandler} = props;
+  const {id, name, image, previewVideoLink, isActive, mouseEnterHandler, mouseLeaveHandler} = props;
 
   return (
     <article
       className="small-film-card catalog__films-card"
-      onMouseOver={() => mouseOverHandler(id)}
-      onMouseOut={() => mouseOutHandler(id)}
+      onMouseEnter={() => mouseEnterHandler(id)}
+      onMouseLeave={() => mouseLeaveHandler(id)}
     >
       <div className="small-film-card__image">
         <VideoPlayer

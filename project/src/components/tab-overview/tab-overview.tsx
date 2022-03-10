@@ -5,7 +5,7 @@ type typeProps = {
 }
 
 function TabOverview({film}: typeProps) {
-  const {rating} = film;
+  const {rating, scoresCount, director, starring} = film;
 
   return (
     <>
@@ -16,7 +16,7 @@ function TabOverview({film}: typeProps) {
         <p className="film-rating__meta">
           <span className="film-rating__level">Very good</span>
           <span className="film-rating__count">
-            {/* {scoresCount} ratings */}
+            {scoresCount} ratings
           </span>
         </p>
       </div>
@@ -26,9 +26,9 @@ function TabOverview({film}: typeProps) {
           {/* {description} */}
         </p>
 
-        <p className="film-card__director"><strong>Director: {/* {director} */}</strong></p>
+        <p className="film-card__director"><strong>Director: {director}</strong></p>
 
-        <p className="film-card__starring"><strong>Starring: {/* {starring.map((item) => item).join(', ')} */} </strong></p>
+        <p className="film-card__starring"><strong>Starring: {starring.map((item) => item).join(', ')} </strong></p>
       </div>
     </>
   );

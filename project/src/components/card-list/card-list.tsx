@@ -12,13 +12,13 @@ let timer: number | null = null;
 function CardList({films}: typeProps) {
   const [isActive, setActive] = useState<number | null>(null);
 
-  const mouseOverHandler = (filmId: number): void => {
+  const mouseEnterHandler = (filmId: number): void => {
     timer = window.setTimeout(() => {
       setActive(filmId);
     }, MOUSE_DELAY);
   };
 
-  const mouseOutHandler = (filmId: number): void => {
+  const mouseLeaveHandler = (filmId: number): void => {
     if (timer) {
       clearTimeout(timer);
     }
@@ -32,8 +32,8 @@ function CardList({films}: typeProps) {
           key={film.id}
           {...film}
           isActive={isActive === film.id}
-          mouseOverHandler={mouseOverHandler}
-          mouseOutHandler={mouseOutHandler}
+          mouseEnterHandler={mouseEnterHandler}
+          mouseLeaveHandler={mouseLeaveHandler}
         />
       ))}
     </div>
