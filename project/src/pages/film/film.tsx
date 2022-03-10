@@ -1,4 +1,4 @@
-import {useState, SyntheticEvent} from 'react';
+import {useState} from 'react';
 import {AppRoute, TabNames} from '../../const';
 import Logo from '../../components/logo/logo';
 import CardList from '../../components/card-list/card-list';
@@ -12,19 +12,16 @@ type typeProps = {
 }
 
 function Film({films, id = 3}: typeProps) {
-  const location = useLocation();
-  const [activeTab, setActiveTab] = useState(TabNames.Overview.toString());
-  const {backgroundColor, backgroundImage, name, genre, released, posterImage,
-  } = films[id];
+  let location = useLocation().hash.substr(1);
+  location = TabNames.Overview;
+  const [activeTab, setActiveTab] = useState(location);
+  const {backgroundColor, backgroundImage, name, genre, released, posterImage} = films[id];
 
-  let hash = location.hash.substr(1);
-  if (hash === '') {
-    hash = activeTab;
-  }
 
-  const changeTabHandler = (evt: SyntheticEvent) => {
+  const changeTabHandler = (evt: any) => {
     evt.preventDefault();
-    setActiveTab(hash);
+    const value = evt.target.hash.substr(1);
+    setActiveTab(value);
   };
 
   return (
@@ -89,25 +86,25 @@ function Film({films, id = 3}: typeProps) {
               <nav className="film-nav film-card__nav">
                 <ul className="film-nav__list" onClick={changeTabHandler} >
                   <li
-                    className={`film-nav__item ${hash.includes(TabNames.Overview) ? 'film-nav__item--active' : ''}`}
+                    className={`film-nav__item ${activeTab.includes(TabNames.Overview) ? 'film-nav__item--active' : ''}`}
                   >
                     <Link to="#overview" className="film-nav__link">Overview</Link>
                   </li>
 
                   <li
-                    className={`film-nav__item ${hash.includes(TabNames.Details) ? 'film-nav__item--active' : ''}`}
+                    className={`film-nav__item ${activeTab.includes(TabNames.Details) ? 'film-nav__item--active' : ''}`}
                   >
                     <Link to="#details" className="film-nav__link">Details</Link>
                   </li>
 
                   <li
-                    className={`film-nav__item ${hash.includes(TabNames.Reviews) ? 'film-nav__item--active' : ''}`}
+                    className={`film-nav__item ${activeTab.includes(TabNames.Reviews) ? 'film-nav__item--active' : ''}`}
                   >
                     <Link to="#reviews" className="film-nav__link">Reviews</Link>
                   </li>
                 </ul>
               </nav>
-              <Tabs activeTab={hash} film={films[id]} />
+              <Tabs activeTab={activeTab} film={films[id]} />
             </div>
           </div>
         </div>
@@ -117,7 +114,7 @@ function Film({films, id = 3}: typeProps) {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <CardList films={films} />
+          <CardList films={films} genre={genre} />
         </section>
 
         <footer className="page-footer">
