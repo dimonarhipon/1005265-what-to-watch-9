@@ -1,6 +1,6 @@
 import { useState, FormEvent, ChangeEvent } from 'react';
-function Review() {
 
+function Review() {
   const [text, setText] = useState('');
   const [rating, setRating] = useState('1');
 

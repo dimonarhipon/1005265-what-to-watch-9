@@ -8,6 +8,12 @@ export enum AppRoute {
   Player = '/player/:id',
 }
 
+export enum TabNames {
+  Overview = 'overview',
+  Details = 'details',
+  Reviews = 'reviews',
+}
+
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',

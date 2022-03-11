@@ -4,21 +4,22 @@ import {dataFilms} from '../../types/data';
 
 type typeProps = {
   films: dataFilms,
+  genre?: string,
 }
 
 const MOUSE_DELAY = 1000;
 let timer: number | null = null;
 
-function CardList({films}: typeProps) {
+function CardList({films, genre}: typeProps) {
   const [isActive, setActive] = useState<number | null>(null);
 
-  const mouseOverHandler = (filmId: number): void => {
+  const mouseEnterHandler = (filmId: number): void => {
     timer = window.setTimeout(() => {
       setActive(filmId);
     }, MOUSE_DELAY);
   };
 
-  const mouseOutHandler = (filmId: number): void => {
+  const mouseLeaveHandler = (filmId: number): void => {
     if (timer) {
       clearTimeout(timer);
     }
@@ -27,26 +28,29 @@ function CardList({films}: typeProps) {
 
   return (
     <div className="catalog__films-list">
-      {films.map((film) => (
-        <Card
-          key={film.name}
-          {...film}
-          isActive={isActive === film.id}
-          mouseOverHandler={mouseOverHandler}
-          mouseOutHandler={mouseOutHandler}
-        />
-      ))}
+      {genre ?
+        films.filter((film) => film.genre === genre).slice(0, 4)
+          .map((film) => (
+            <Card
+              key={film.id}
+              {...film}
+              isActive={isActive === film.id}
+              mouseEnterHandler={mouseEnterHandler}
+              mouseLeaveHandler={mouseLeaveHandler}
+            />
+          ))
+        : films.map((film) => (
+          <Card
+            key={film.id}
+            {...film}
+            isActive={isActive === film.id}
+            mouseEnterHandler={mouseEnterHandler}
+            mouseLeaveHandler={mouseLeaveHandler}
+          />
+        ))}
     </div>
   );
 }
 
 export default CardList;
 
-/*
-
-В этом задании мы приступим к реализации видеоплеера. Видеоплеер активируется спустя 1 секунду после наведения и удержании курсора на карточке с фильмом. Под наведением и удержанием подразумевается, что курсор не выходит за пределы карточки с фильмом. В этот момент изображение в карточке замещается плеером и начинается воспроизведение превью фильма.
-
-
-Подключите компонент «Видеоплеер» к карточке с фильмом. Видеоплеер активируется спустя одну секунду после наведения и удержания курсора на карточке с фильмом. Превью фильма воспроизводится без звука. Если пользователь переместил курсор с карточки, то воспроизведение останавливается и карточка переходит в исходное состояние — вместо видео отображается статичное изображение (как и изначально). При повторном наведении на карточку воспроизведение превью начинается заново.
-
-*/

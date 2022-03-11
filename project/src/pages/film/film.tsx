@@ -1,8 +1,10 @@
-import {AppRoute} from '../../const';
+import {useState} from 'react';
+import {AppRoute, TabNames} from '../../const';
 import Logo from '../../components/logo/logo';
 import CardList from '../../components/card-list/card-list';
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import {dataFilms} from '../../types/data';
+import Tabs from '../../components/tabs/tabs';
 
 type typeProps = {
   films: dataFilms,
@@ -10,7 +12,18 @@ type typeProps = {
 }
 
 function Film({films, id = 3}: typeProps) {
-  const {backgroundColor, backgroundImage, name, genre, released, posterImage, rating, scoresCount, description, director, starring} = films[id];
+  let location = useLocation().hash.substr(1);
+  location = TabNames.Overview;
+  const [activeTab, setActiveTab] = useState(location);
+  const {backgroundColor, backgroundImage, name, genre, released, posterImage} = films[id];
+
+
+  const changeTabHandler = (evt: any) => {
+    evt.preventDefault();
+    const value = evt.target.hash.substr(1);
+    setActiveTab(value);
+  };
+
   return (
     <>
       <section className="film-card film-card--full" style={{backgroundColor: backgroundColor}} >
@@ -71,34 +84,27 @@ function Film({films, id = 3}: typeProps) {
 
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <a href="#" className="film-nav__link">Overview</a>
+                <ul className="film-nav__list" onClick={changeTabHandler} >
+                  <li
+                    className={`film-nav__item ${activeTab.includes(TabNames.Overview) ? 'film-nav__item--active' : ''}`}
+                  >
+                    <Link to="#overview" className="film-nav__link">Overview</Link>
                   </li>
-                  <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Details</a>
+
+                  <li
+                    className={`film-nav__item ${activeTab.includes(TabNames.Details) ? 'film-nav__item--active' : ''}`}
+                  >
+                    <Link to="#details" className="film-nav__link">Details</Link>
                   </li>
-                  <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Reviews</a>
+
+                  <li
+                    className={`film-nav__item ${activeTab.includes(TabNames.Reviews) ? 'film-nav__item--active' : ''}`}
+                  >
+                    <Link to="#reviews" className="film-nav__link">Reviews</Link>
                   </li>
                 </ul>
               </nav>
-
-              <div className="film-rating">
-                <div className="film-rating__score">{rating}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">{scoresCount} ratings</span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                <p>{description}</p>
-
-                <p className="film-card__director"><strong>Director: {director}</strong></p>
-
-                <p className="film-card__starring"><strong>Starring: {starring.map((item) => item).join(', ')}</strong></p>
-              </div>
+              <Tabs activeTab={activeTab} film={films[id]} />
             </div>
           </div>
         </div>
@@ -108,7 +114,7 @@ function Film({films, id = 3}: typeProps) {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <CardList films={films} />
+          <CardList films={films} genre={genre} />
         </section>
 
         <footer className="page-footer">
