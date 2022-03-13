@@ -19,7 +19,7 @@ function App({films}: typeProps) {
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Root}>
-          <Route index element={<Main films={films} />} />
+          <Route index element={<Main />} />
           <Route path={AppRoute.Login} element={<SingIn />} />
           <Route
             path={AppRoute.MyList}

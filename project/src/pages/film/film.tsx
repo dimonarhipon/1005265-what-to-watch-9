@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, MouseEvent} from 'react';
 import {AppRoute, TabNames} from '../../const';
 import Logo from '../../components/logo/logo';
 import CardList from '../../components/card-list/card-list';
@@ -8,21 +8,25 @@ import Tabs from '../../components/tabs/tabs';
 
 type typeProps = {
   films: dataFilms,
-  id?: number,
+  filmId?: number,
 }
 
-function Film({films, id = 3}: typeProps) {
+function Film({films, filmId = 1}: typeProps) {
   let location = useLocation().hash.substr(1);
   location = TabNames.Overview;
   const [activeTab, setActiveTab] = useState(location);
-  const {backgroundColor, backgroundImage, name, genre, released, posterImage} = films[id];
+  const {backgroundColor, backgroundImage, name, genre, released, posterImage} = films[filmId];
 
 
-  const changeTabHandler = (evt: any) => {
+  const changeTabHandler = (evt: MouseEvent<HTMLElement>) => {
     evt.preventDefault();
-    const value = evt.target.hash.substr(1);
+    const value = (evt.target as HTMLAnchorElement).hash.substr(1);
     setActiveTab(value);
   };
+
+  const filterGenreFilms = (array: dataFilms): dataFilms => (
+    array.filter((film) => film.genre === genre && film.id !== filmId).slice(0, 4)
+  );
 
   return (
     <>
@@ -104,7 +108,7 @@ function Film({films, id = 3}: typeProps) {
                   </li>
                 </ul>
               </nav>
-              <Tabs activeTab={activeTab} film={films[id]} />
+              <Tabs activeTab={activeTab} film={films[filmId]} />
             </div>
           </div>
         </div>
@@ -113,8 +117,7 @@ function Film({films, id = 3}: typeProps) {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-
-          <CardList films={films} genre={genre} />
+          <CardList films={filterGenreFilms(films)} />
         </section>
 
         <footer className="page-footer">
