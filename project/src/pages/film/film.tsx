@@ -1,17 +1,17 @@
-import {useEffect, useState, MouseEvent} from 'react';
+import {useState, MouseEvent} from 'react';
 import {AppRoute, TabNames} from '../../const';
 import Logo from '../../components/logo/logo';
 import CardList from '../../components/card-list/card-list';
 import {Link, useLocation} from 'react-router-dom';
 import Tabs from '../../components/tabs/tabs';
-import { getGenreFilms } from '../../store/action';
-import { useAppSelector, useAppDispatch } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 
 type typeProps = {
   filmId?: number,
 }
 
 function Film({filmId = 0}: typeProps) {
+  const MAX_FILMS = 4;
   const {films} = useAppSelector((state) => state);
   const {backgroundColor, backgroundImage, name, genre, released, posterImage} = films[filmId];
 
@@ -24,12 +24,6 @@ function Film({filmId = 0}: typeProps) {
     const value = (evt.target as HTMLAnchorElement).hash.substr(1);
     setActiveTab(value);
   };
-
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(getGenreFilms({ genre }));
-  }, [genre]);
 
   return (
     <>
@@ -120,7 +114,7 @@ function Film({filmId = 0}: typeProps) {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <CardList films={films.slice(0, 4)} />
+          <CardList films={films.slice(0, MAX_FILMS)} />
         </section>
 
         <footer className="page-footer">

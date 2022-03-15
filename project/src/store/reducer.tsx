@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import {Genres} from '../const';
+import {Genres, COUNT_FILMS} from '../const';
 import {films} from '../mocks/films';
 import {changeGenre, getGenreFilms} from './action';
 
@@ -17,8 +17,8 @@ const reducer = createReducer(initialState, (bundler) => (
     .addCase(getGenreFilms, (state, action) => {
       const {genre} = action.payload;
       state.films = genre === Genres.AllGenres
-        ? films.slice(0, 8)
-        : films.filter((film) => film.genre === genre);
+        ? films.slice(0, COUNT_FILMS)
+        : films.filter((film) => film.genre === genre).slice(0, COUNT_FILMS);
     })
 ));
 

@@ -79,7 +79,7 @@ function Main() {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <GenreList films={films} currentGenre={genreFilms} />
-          <CardList films={films.slice(0, 8)}  />
+          <CardList films={films}  />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

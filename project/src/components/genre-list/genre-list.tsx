@@ -1,6 +1,6 @@
 import {Genres} from '../../const';
 import { useAppDispatch } from '../../hooks';
-import { changeGenre } from '../../store/action';
+import { changeGenre, getGenreFilms } from '../../store/action';
 import {dataFilms} from '../../types/data';
 
 type typeProps = {
@@ -15,6 +15,7 @@ function GenreList ({films, currentGenre}: typeProps) {
 
   const handleGenreClick = (genre: string) => {
     dispatch(changeGenre({ genre }));
+    dispatch(getGenreFilms({ genre }));
   };
 
   return (
