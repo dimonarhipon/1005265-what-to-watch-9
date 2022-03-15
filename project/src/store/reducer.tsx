@@ -8,9 +8,6 @@ const initialState = {
   films: films,
 };
 
-
-// (state, action) bundler
-
 const reducer = createReducer(initialState, (bundler) => (
   bundler
     .addCase(changeGenre, (state, action) => {
@@ -19,7 +16,9 @@ const reducer = createReducer(initialState, (bundler) => (
     })
     .addCase(getGenreFilms, (state, action) => {
       const {genre} = action.payload;
-      state.films = films.filter((film) => film.genre === genre);
+      state.films = genre === Genres.AllGenres
+        ? films.slice(0, 8)
+        : films.filter((film) => film.genre === genre);
     })
 ));
 

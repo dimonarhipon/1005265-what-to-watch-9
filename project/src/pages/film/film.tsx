@@ -1,22 +1,23 @@
-import {useState, MouseEvent} from 'react';
+import {useEffect, useState, MouseEvent} from 'react';
 import {AppRoute, TabNames} from '../../const';
 import Logo from '../../components/logo/logo';
 import CardList from '../../components/card-list/card-list';
 import {Link, useLocation} from 'react-router-dom';
-import {dataFilms} from '../../types/data';
 import Tabs from '../../components/tabs/tabs';
+import { getGenreFilms } from '../../store/action';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 
 type typeProps = {
-  films: dataFilms,
   filmId?: number,
 }
 
-function Film({films, filmId = 1}: typeProps) {
+function Film({filmId = 0}: typeProps) {
+  const {films} = useAppSelector((state) => state);
+  const {backgroundColor, backgroundImage, name, genre, released, posterImage} = films[filmId];
+
   let location = useLocation().hash.substr(1);
   location = TabNames.Overview;
   const [activeTab, setActiveTab] = useState(location);
-  const {backgroundColor, backgroundImage, name, genre, released, posterImage} = films[filmId];
-
 
   const changeTabHandler = (evt: MouseEvent<HTMLElement>) => {
     evt.preventDefault();
@@ -24,9 +25,11 @@ function Film({films, filmId = 1}: typeProps) {
     setActiveTab(value);
   };
 
-  const filterGenreFilms = (array: dataFilms): dataFilms => (
-    array.filter((film) => film.genre === genre && film.id !== filmId).slice(0, 4)
-  );
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getGenreFilms({ genre }));
+  }, [genre]);
 
   return (
     <>
@@ -117,7 +120,7 @@ function Film({films, filmId = 1}: typeProps) {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <CardList films={filterGenreFilms(films)} />
+          <CardList films={films.slice(0, 4)} />
         </section>
 
         <footer className="page-footer">

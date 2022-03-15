@@ -1,23 +1,22 @@
+import {useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import CardList from '../../components/card-list/card-list';
 import GenreList from '../../components/genre-list/genre-list';
 import Logo from '../../components/logo/logo';
 import { AppRoute } from '../../const';
-import {dataFilms} from '../../types/data';
-import {Genres} from '../../const';
-import { useAppSelector } from '../../hooks';
+import { getGenreFilms } from '../../store/action';
+import { useAppSelector, useAppDispatch } from '../../hooks';
+
 
 function Main() {
-  const filmId = 1;
+  const filmId = 0;
   const {films, genreFilms} = useAppSelector((state) => state);
   const {backgroundImage, posterImage, name, genre, released} = films[filmId];
+  const dispatch = useAppDispatch();
 
-
-  const filterGenreFilms = (array: dataFilms): dataFilms => (
-    genreFilms === Genres.AllGenres
-      ? array.slice(0, 8)
-      : array.filter((film) => film.genre === genreFilms).slice(0, 8)
-  );
+  useEffect(() => {
+    dispatch(getGenreFilms({ genre: genreFilms }));
+  }, [genreFilms]);
 
   return (
     <>
@@ -80,7 +79,7 @@ function Main() {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <GenreList films={films} currentGenre={genreFilms} />
-          <CardList films={filterGenreFilms(films)}  />
+          <CardList films={films.slice(0, 8)}  />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

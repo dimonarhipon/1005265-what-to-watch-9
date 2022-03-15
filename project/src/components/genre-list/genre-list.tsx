@@ -11,33 +11,34 @@ type typeProps = {
 function GenreList ({films, currentGenre}: typeProps) {
   const dispatch = useAppDispatch();
   const genres = films.map((film) => film.genre);
-  const uniqueGenres = [Genres.AllGenres, ...Array.from(new Set(genres))].map(
-    (genre, index) => ({
-      id: index,
-      genre,
-    }),
-  );
+  const uniqueGenres = [Genres.AllGenres, ...Array.from(new Set(genres))];
 
-  const handleGenreClick = (
-    evt: React.MouseEvent<HTMLLIElement, MouseEvent>,
-  ) => {
-    const genre = evt.currentTarget.children[0].innerHTML;
+  const handleGenreClick = (genre: string) => {
     dispatch(changeGenre({ genre }));
   };
 
-
   return (
     <ul className="catalog__genres-list">
-      {uniqueGenres.map(({ genre, id }) => (
-        <li
-          key={id}
-          className={`catalog__genres-item ${genre === currentGenre ?
-            'catalog__genres-item--active' : ''}`}
-          onClick={handleGenreClick}
-        >
-          <a className="catalog__genres-link">{genre}</a>
-        </li>
-      ))}
+      {uniqueGenres.map((genre, index) => {
+        const keyValue = `count-${index}`;
+        return (
+          <li
+            key={keyValue}
+            className={`catalog__genres-item ${genre === currentGenre ?
+              'catalog__genres-item--active' : ''}`}
+          >
+            <button
+              onClick={() => handleGenreClick(genre)} className="catalog__genres-link"
+              style={{
+                cursor: 'pointer',
+                backgroundColor: 'transparent',
+                border: 'none',
+              }}
+            >
+              {genre}
+            </button>
+          </li>);
+      })}
     </ul>
   );
 }
