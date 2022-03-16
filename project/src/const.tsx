@@ -1,4 +1,4 @@
-export const COUNT_FILMS = 8;
+export const MAX_COUNT_FILMS = 8;
 
 export enum AppRoute {
   Root = '/',

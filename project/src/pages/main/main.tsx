@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 import CardList from '../../components/card-list/card-list';
 import GenreList from '../../components/genre-list/genre-list';
 import Logo from '../../components/logo/logo';
-import { AppRoute } from '../../const';
+import { AppRoute, MAX_COUNT_FILMS } from '../../const';
 import { getGenreFilms } from '../../store/action';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 
 
 function Main() {
   const filmId = 0;
-  const {films, genreFilms} = useAppSelector((state) => state);
+  const {films, genreFilms, filteredFilms} = useAppSelector((state) => state);
   const {backgroundImage, posterImage, name, genre, released} = films[filmId];
   const dispatch = useAppDispatch();
 
@@ -79,7 +79,7 @@ function Main() {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <GenreList films={films} currentGenre={genreFilms} />
-          <CardList films={films}  />
+          <CardList films={filteredFilms.slice(0, MAX_COUNT_FILMS)}  />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
