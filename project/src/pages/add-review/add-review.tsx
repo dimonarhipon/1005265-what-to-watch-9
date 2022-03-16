@@ -2,21 +2,21 @@ import { Link } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import Review from '../../components/review/review';
 import { AppRoute } from '../../const';
-import {dataFilms} from '../../types/data';
+import { useAppSelector } from '../../hooks';
 
 type typeProps = {
-  films: dataFilms,
-  id?: number,
+  filmId?: number,
 }
 
 
-function AddReview({films, id = 3}: typeProps) {
+function AddReview({filmId = 0}: typeProps) {
+  const {films} = useAppSelector((state) => state);
   const {
     backgroundColor,
     backgroundImage,
     name,
     posterImage,
-  } = films[id];
+  } = films[filmId];
   return (
     <section className="film-card film-card--full" style={{backgroundColor: backgroundColor}}>
       <div className="film-card__header">

@@ -4,13 +4,12 @@ import {dataFilms} from '../../types/data';
 
 type typeProps = {
   films: dataFilms,
-  genre?: string,
 }
 
 const MOUSE_DELAY = 1000;
 let timer: number | null = null;
 
-function CardList({films, genre}: typeProps) {
+function CardList({films}: typeProps) {
   const [isActive, setActive] = useState<number | null>(null);
 
   const mouseEnterHandler = (filmId: number): void => {
@@ -28,26 +27,15 @@ function CardList({films, genre}: typeProps) {
 
   return (
     <div className="catalog__films-list">
-      {genre ?
-        films.filter((film) => film.genre === genre).slice(0, 4)
-          .map((film) => (
-            <Card
-              key={film.id}
-              {...film}
-              isActive={isActive === film.id}
-              mouseEnterHandler={mouseEnterHandler}
-              mouseLeaveHandler={mouseLeaveHandler}
-            />
-          ))
-        : films.map((film) => (
-          <Card
-            key={film.id}
-            {...film}
-            isActive={isActive === film.id}
-            mouseEnterHandler={mouseEnterHandler}
-            mouseLeaveHandler={mouseLeaveHandler}
-          />
-        ))}
+      {films.map((film) => (
+        <Card
+          key={film.id}
+          {...film}
+          isActive={isActive === film.id}
+          mouseEnterHandler={mouseEnterHandler}
+          mouseLeaveHandler={mouseLeaveHandler}
+        />
+      ))}
     </div>
   );
 }

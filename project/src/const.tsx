@@ -1,3 +1,5 @@
+export const MAX_COUNT_FILMS = 8;
+
 export enum AppRoute {
   Root = '/',
   Login = '/login',
@@ -12,6 +14,17 @@ export enum TabNames {
   Overview = 'overview',
   Details = 'details',
   Reviews = 'reviews',
+}
+
+export enum Genres {
+  AllGenres = 'All genres',
+  Drama = 'Drama',
+  Fantastic = 'Fantastic',
+  History = 'History',
+  Biography = 'Biography',
+  Thriller = 'Thriller',
+  Horror = 'Horror',
+  Western = 'Western',
 }
 
 export enum AuthorizationStatus {

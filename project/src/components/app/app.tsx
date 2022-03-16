@@ -19,7 +19,7 @@ function App({films}: typeProps) {
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Root}>
-          <Route index element={<Main films={films} />} />
+          <Route index element={<Main />} />
           <Route path={AppRoute.Login} element={<SingIn />} />
           <Route
             path={AppRoute.MyList}
@@ -27,9 +27,9 @@ function App({films}: typeProps) {
           />
 
           <Route path={AppRoute.Films}>
-            <Route index element={<Film films={films} />} />
-            <Route path={AppRoute.Id} element={<Film films={films} />} />
-            <Route path={AppRoute.Review} element={<AddReview films={films} />} />
+            <Route index element={<Film />} />
+            <Route path={AppRoute.Id} element={<Film />} />
+            <Route path={AppRoute.Review} element={<AddReview />} />
           </Route>
 
           <Route path={AppRoute.Player} element={<Player films={films} />} />

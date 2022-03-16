@@ -17,7 +17,7 @@ function TabDetails({film}: typeProps) {
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Starring</strong>
           <span className="film-card__details-value">
-            {starring.map((item) => item).join(', ')}
+            {starring.map((item) => `${item}, \n`)}
           </span>
         </p>
       </div>
