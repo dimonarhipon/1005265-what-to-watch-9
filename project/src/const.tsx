@@ -10,6 +10,14 @@ export enum AppRoute {
   Player = '/player/:id',
 }
 
+export enum APIRoute {
+  Films = '/films',
+  FilmPromo = '/promo',
+  Favorite = '/favorite',
+  Login = '/login',
+  Logout = '/logout',
+}
+
 export enum TabNames {
   Overview = 'overview',
   Details = 'details',
@@ -32,3 +40,11 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export enum HTTP_CODE {
+  BAD_REQUEST = 400,
+  UNAUTHORIZED = 401,
+  NOT_FOUND = 404,
+}
+
+export type ErrorType = unknown;

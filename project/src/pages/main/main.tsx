@@ -6,11 +6,16 @@ import Logo from '../../components/logo/logo';
 import { AppRoute, MAX_COUNT_FILMS } from '../../const';
 import { getGenreFilms } from '../../store/action';
 import { useAppSelector, useAppDispatch } from '../../hooks';
+import { dataFilms } from '../../types/data';
 
+type PropsType = {
+  films: dataFilms,
+}
 
-function Main() {
+function Main({films}: PropsType) {
+
   const filmId = 0;
-  const {films, genreFilms, filteredFilms} = useAppSelector((state) => state);
+  const {genreFilms, filteredFilms} = useAppSelector((state) => state);
   const {backgroundImage, posterImage, name, genre, released} = films[filmId];
   const dispatch = useAppDispatch();
 

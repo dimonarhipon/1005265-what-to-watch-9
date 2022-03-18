@@ -7,10 +7,10 @@ type typeProps = {
 }
 
 function Player({films}: typeProps) {
-  const {videoLink, image} = films[0];
+  const {videoLink, posterImage} = films[0];
   return (
     <div className="player">
-      <video src={videoLink} className="player__video" poster={image}></video>
+      <video src={videoLink} className="player__video" poster={posterImage}></video>
 
       <Link to={AppRoute.Films} className="player__exit">Exit</Link>
 

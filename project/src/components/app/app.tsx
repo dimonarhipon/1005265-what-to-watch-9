@@ -7,19 +7,25 @@ import Film from '../../pages/film/film';
 import AddReview from '../../pages/add-review/add-review';
 import Player from '../../pages/player/player';
 import Error from '../error/error';
+import Loader from '../loader/loader';
 import { BrowserRouter } from 'react-router-dom';
-import {dataFilms} from '../../types/data';
+import { useAppSelector } from '../../hooks';
 
-type typeProps = {
-  films: dataFilms,
-};
 
-function App({films}: typeProps) {
+function App() {
+  const {films, isDataLoaded} = useAppSelector((state) => state);
+
+  if (!isDataLoaded) {
+    return (
+      <Loader />
+    );
+  }
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Root}>
-          <Route index element={<Main />} />
+          <Route index element={<Main films={films}/>} />
           <Route path={AppRoute.Login} element={<SingIn />} />
           <Route
             path={AppRoute.MyList}
@@ -29,7 +35,7 @@ function App({films}: typeProps) {
           <Route path={AppRoute.Films}>
             <Route index element={<Film />} />
             <Route path={AppRoute.Id} element={<Film />} />
-            <Route path={AppRoute.Review} element={<AddReview />} />
+            <Route path={AppRoute.Review} element={<AddReview  />} />
           </Route>
 
           <Route path={AppRoute.Player} element={<Player films={films} />} />
