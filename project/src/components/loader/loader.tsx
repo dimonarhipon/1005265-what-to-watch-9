@@ -1,8 +1,8 @@
 function Loader() {
   return (
-    <div className="loader loader-1">
-      <div className="loader-outter"></div>
-      <div className="loader-inner"></div>
+    <div className="loader">
+      <div className="loader__outter"></div>
+      <div className="loader__inner"></div>
     </div>
   );
 }
