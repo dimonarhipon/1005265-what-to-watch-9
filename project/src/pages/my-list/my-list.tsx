@@ -2,13 +2,11 @@ import CardList from '../../components/card-list/card-list';
 import Logo from '../../components/logo/logo';
 import {Link} from 'react-router-dom';
 import { AppRoute } from '../../const';
-import {dataFilms} from '../../types/data';
+import { useAppSelector } from '../../hooks';
 
-type typeProps = {
-  films: dataFilms,
-}
+function MyList() {
+  const {films} = useAppSelector((state) => state);
 
-function MyList({films}: typeProps) {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">

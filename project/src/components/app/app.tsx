@@ -13,7 +13,7 @@ import { useAppSelector } from '../../hooks';
 
 
 function App() {
-  const {films, isDataLoaded} = useAppSelector((state) => state);
+  const {isDataLoaded} = useAppSelector((state) => state);
 
   if (!isDataLoaded) {
     return (
@@ -29,7 +29,7 @@ function App() {
           <Route path={AppRoute.Login} element={<SingIn />} />
           <Route
             path={AppRoute.MyList}
-            element={<MyList films={films} />}
+            element={<MyList />}
           />
 
           <Route path={AppRoute.Films}>
@@ -38,7 +38,7 @@ function App() {
             <Route path={AppRoute.Review} element={<AddReview  />} />
           </Route>
 
-          <Route path={AppRoute.Player} element={<Player films={films} />} />
+          <Route path={AppRoute.Player} element={<Player />} />
         </Route>
 
         <Route path='*' element={<Error />} />
