@@ -5,7 +5,7 @@ import VideoPlayer from '../video-player/video-player';
 type Props = {
   id: number,
   name: string,
-  image: string,
+  previewImage: string,
   previewVideoLink: string,
   isActive: boolean,
   mouseEnterHandler: (id: number) => void;
@@ -19,7 +19,7 @@ const CardSize = {
 
 function Card({...props}: Props) {
   const { width, height } = CardSize;
-  const {id, name, image, previewVideoLink, isActive, mouseEnterHandler, mouseLeaveHandler} = props;
+  const {id, name, previewImage, previewVideoLink, isActive, mouseEnterHandler, mouseLeaveHandler} = props;
 
   return (
     <article
@@ -32,7 +32,7 @@ function Card({...props}: Props) {
           src={previewVideoLink}
           width={width}
           height={height}
-          poster={image}
+          poster={previewImage}
           isActive={isActive}
           muted
         />

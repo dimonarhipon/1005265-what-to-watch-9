@@ -2,14 +2,15 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import { films } from './mocks/films';
 import {store} from './store/index';
+import {loadFilmsAction} from './store/api-action';
 
+store.dispatch(loadFilmsAction());
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App films={films} />
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

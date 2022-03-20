@@ -1,8 +1,8 @@
 export type dataFilm = {
   id: number,
   name: string,
-  image: string,
   posterImage: string,
+  previewImage: string,
   backgroundImage: string,
   backgroundColor: string,
   description: string,

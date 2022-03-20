@@ -1,22 +1,29 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import CardList from '../../components/card-list/card-list';
 import GenreList from '../../components/genre-list/genre-list';
 import Logo from '../../components/logo/logo';
+import ShowMore from '../../components/show-more/show-more';
 import { AppRoute, MAX_COUNT_FILMS } from '../../const';
 import { getGenreFilms } from '../../store/action';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 
-
 function Main() {
   const filmId = 0;
-  const {films, genreFilms, filteredFilms} = useAppSelector((state) => state);
+  const {genreFilms, filteredFilms, films} = useAppSelector((state) => state);
   const {backgroundImage, posterImage, name, genre, released} = films[filmId];
+  const [count, setCount] = useState(MAX_COUNT_FILMS);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getGenreFilms({ genre: genreFilms }));
   }, [genreFilms]);
+
+  const cardList = filteredFilms.slice(0, count);
+
+  const showMoreHandler = (): void => {
+    setCount(count + MAX_COUNT_FILMS);
+  };
 
   return (
     <>
@@ -79,11 +86,12 @@ function Main() {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <GenreList films={films} currentGenre={genreFilms} />
-          <CardList films={filteredFilms.slice(0, MAX_COUNT_FILMS)}  />
+          <CardList films={cardList} />
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          {filteredFilms.length - count > 0
+            ? <ShowMore showMoreHandler={showMoreHandler}/>
+            : null}
+
         </section>
 
         <footer className="page-footer">
