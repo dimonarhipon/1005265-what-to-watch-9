@@ -35,7 +35,7 @@ function App() {
           <Route path={AppRoute.Films}>
             <Route index element={<Film />} />
             <Route path={AppRoute.Id} element={<Film />} />
-            <Route path={AppRoute.Review} element={<AddReview  />} />
+            <Route path={AppRoute.Review} element={<AddReview />} />
           </Route>
 
           <Route path={AppRoute.Player} element={<Player />} />

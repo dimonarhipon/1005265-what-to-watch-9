@@ -1,12 +1,13 @@
+import {MouseEvent} from 'react';
 
 type Props = {
-  showMoreHandler: () => void,
+  showMoreHandler: (evt: MouseEvent<HTMLButtonElement>) => void,
 }
 
-function ShowMore(showMoreHandler: Props) {
+function ShowMore({showMoreHandler}: Props) {
   return (
     <div className="catalog__more">
-      <button className="catalog__button" onClick={() => showMoreHandler} type="button">Show more</button>
+      <button className="catalog__button" onClick={showMoreHandler} type="button">Show more</button>
     </div>
   );
 }
