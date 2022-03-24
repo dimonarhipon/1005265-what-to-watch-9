@@ -47,4 +47,15 @@ export enum HTTP_CODE {
   NOT_FOUND = 404,
 }
 
+export type AuthData = {
+  email: string;
+  password: string;
+};
+
+export type UserData = {
+  id: number;
+  email: string;
+  token: string;
+};
+
 export type ErrorType = unknown;

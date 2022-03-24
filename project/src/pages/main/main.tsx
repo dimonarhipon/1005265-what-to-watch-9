@@ -1,17 +1,17 @@
 import {useEffect, useState} from 'react';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import { Link } from 'react-router-dom';
 import CardList from '../../components/card-list/card-list';
 import GenreList from '../../components/genre-list/genre-list';
 import Logo from '../../components/logo/logo';
 import ShowMore from '../../components/show-more/show-more';
-import { AppRoute, MAX_COUNT_FILMS } from '../../const';
+import { AppRoute, MAX_COUNT_FILMS, AuthorizationStatus } from '../../const';
 import { getGenreFilms } from '../../store/action';
-import { useAppSelector, useAppDispatch } from '../../hooks';
+import {logoutAction} from '../../store/api-action';
+
 
 function Main() {
-  const filmId = 0;
-  const {genreFilms, filteredFilms, films} = useAppSelector((state) => state);
-  const {backgroundImage, posterImage, name, genre, released} = films[filmId];
+  const { genreFilms, filteredFilms, films, authorizationStatus} = useAppSelector((state) => state);
   const [count, setCount] = useState(MAX_COUNT_FILMS);
   const dispatch = useAppDispatch();
 
@@ -19,10 +19,16 @@ function Main() {
     dispatch(getGenreFilms({ genre: genreFilms }));
   }, [genreFilms]);
 
+  const {backgroundImage, posterImage, name, genre, released} = films[0];
   const cardList = filteredFilms.slice(0, count);
 
   const showMoreHandler = (): void => {
     setCount(count + MAX_COUNT_FILMS);
+  };
+
+  const logoutHandler = (evt: React.MouseEvent<HTMLElement>) => {
+    evt.preventDefault();
+    dispatch(logoutAction());
   };
 
   return (
@@ -37,15 +43,24 @@ function Main() {
         <header className="page-header film-card__head">
           <Logo />
 
+
           <ul className="user-block">
             <li className="user-block__item">
               <div className="user-block__avatar">
                 <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
               </div>
             </li>
-            <li className="user-block__item">
-              <Link to={AppRoute.Login} className="user-block__link">Sign out</Link>
-            </li>
+
+            {authorizationStatus === AuthorizationStatus.Auth
+              ? (
+                <a className="user-block__link" onClick={logoutHandler}>
+                  Sign out
+                </a>
+              ) : (
+                <Link to={AppRoute.Login} className="user-block__link">
+                  Sign in
+                </Link>
+              )}
           </ul>
         </header>
 

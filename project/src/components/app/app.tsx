@@ -1,7 +1,9 @@
 import {Routes, Route} from 'react-router-dom';
 import {AppRoute} from '../../const';
-import Main from '../../pages/main/main';
+import { checkAuthAction } from '../../store/api-action';
+import PrivateRoute from '../../components/private-route/private-route';
 import SingIn from '../../pages/sing-in/sing-in';
+import Main from '../../pages/main/main';
 import MyList from '../../pages/my-list/my-list';
 import Film from '../../pages/film/film';
 import AddReview from '../../pages/add-review/add-review';
@@ -9,13 +11,16 @@ import Player from '../../pages/player/player';
 import Error from '../error/error';
 import Loader from '../loader/loader';
 import { BrowserRouter } from 'react-router-dom';
-import { useAppSelector } from '../../hooks';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 
 
 function App() {
-  const {isDataLoaded} = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
+  dispatch(checkAuthAction());
 
-  if (!isDataLoaded) {
+  const isDataLoaded = useAppSelector((state) => state.isDataLoaded);
+
+  if (isDataLoaded) {
     return (
       <Loader />
     );
@@ -29,13 +34,22 @@ function App() {
           <Route path={AppRoute.Login} element={<SingIn />} />
           <Route
             path={AppRoute.MyList}
-            element={<MyList />}
+            element={
+              <PrivateRoute>
+                <MyList />
+              </PrivateRoute>
+            }
           />
 
           <Route path={AppRoute.Films}>
             <Route index element={<Film />} />
             <Route path={AppRoute.Id} element={<Film />} />
-            <Route path={AppRoute.Review} element={<AddReview />} />
+            <Route path={AppRoute.Review} element={
+              <PrivateRoute>
+                <AddReview />
+              </PrivateRoute>
+            }
+            />
           </Route>
 
           <Route path={AppRoute.Player} element={<Player />} />
