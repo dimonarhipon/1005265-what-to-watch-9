@@ -1,17 +1,22 @@
 import {useEffect, useState} from 'react';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import { Link } from 'react-router-dom';
 import CardList from '../../components/card-list/card-list';
 import GenreList from '../../components/genre-list/genre-list';
 import Logo from '../../components/logo/logo';
+import User from '../../components/user/user';
 import ShowMore from '../../components/show-more/show-more';
 import { AppRoute, MAX_COUNT_FILMS } from '../../const';
 import { getGenreFilms } from '../../store/action';
-import { useAppSelector, useAppDispatch } from '../../hooks';
+
 
 function Main() {
-  const filmId = 0;
-  const {genreFilms, filteredFilms, films} = useAppSelector((state) => state);
-  const {backgroundImage, posterImage, name, genre, released} = films[filmId];
+  const {
+    // promoFilm,
+    genreFilms,
+    filteredFilms,
+    films,
+  } = useAppSelector((state) => state);
   const [count, setCount] = useState(MAX_COUNT_FILMS);
   const dispatch = useAppDispatch();
 
@@ -19,6 +24,7 @@ function Main() {
     dispatch(getGenreFilms({ genre: genreFilms }));
   }, [genreFilms]);
 
+  const {backgroundImage, posterImage, name, genre, released} = films[0];
   const cardList = filteredFilms.slice(0, count);
 
   const showMoreHandler = (): void => {
@@ -37,16 +43,7 @@ function Main() {
         <header className="page-header film-card__head">
           <Logo />
 
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <Link to={AppRoute.Login} className="user-block__link">Sign out</Link>
-            </li>
-          </ul>
+          <User />
         </header>
 
         <div className="film-card__wrap">
