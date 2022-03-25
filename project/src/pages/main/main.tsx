@@ -4,19 +4,26 @@ import { Link } from 'react-router-dom';
 import CardList from '../../components/card-list/card-list';
 import GenreList from '../../components/genre-list/genre-list';
 import Logo from '../../components/logo/logo';
+import User from '../../components/user/user';
 import ShowMore from '../../components/show-more/show-more';
-import { AppRoute, MAX_COUNT_FILMS, AuthorizationStatus } from '../../const';
+import { AppRoute, MAX_COUNT_FILMS } from '../../const';
 import { getGenreFilms } from '../../store/action';
-import {logoutAction} from '../../store/api-action';
+import {loadPromoFilmAction} from '../../store/api-action';
 
 
 function Main() {
-  const { genreFilms, filteredFilms, films, authorizationStatus} = useAppSelector((state) => state);
+  const {
+    // promoFilm,
+    genreFilms,
+    filteredFilms,
+    films,
+  } = useAppSelector((state) => state);
   const [count, setCount] = useState(MAX_COUNT_FILMS);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getGenreFilms({ genre: genreFilms }));
+    dispatch(loadPromoFilmAction());
   }, [genreFilms]);
 
   const {backgroundImage, posterImage, name, genre, released} = films[0];
@@ -24,11 +31,6 @@ function Main() {
 
   const showMoreHandler = (): void => {
     setCount(count + MAX_COUNT_FILMS);
-  };
-
-  const logoutHandler = (evt: React.MouseEvent<HTMLElement>) => {
-    evt.preventDefault();
-    dispatch(logoutAction());
   };
 
   return (
@@ -43,25 +45,7 @@ function Main() {
         <header className="page-header film-card__head">
           <Logo />
 
-
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </li>
-
-            {authorizationStatus === AuthorizationStatus.Auth
-              ? (
-                <a className="user-block__link" onClick={logoutHandler}>
-                  Sign out
-                </a>
-              ) : (
-                <Link to={AppRoute.Login} className="user-block__link">
-                  Sign in
-                </Link>
-              )}
-          </ul>
+          <User />
         </header>
 
         <div className="film-card__wrap">

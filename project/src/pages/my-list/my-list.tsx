@@ -1,11 +1,10 @@
 import CardList from '../../components/card-list/card-list';
 import Logo from '../../components/logo/logo';
-import {Link} from 'react-router-dom';
-import { AppRoute } from '../../const';
+import User from '../../components/user/user';
 import { useAppSelector } from '../../hooks';
 
 function MyList() {
-  const {films} = useAppSelector((state) => state);
+  const films = useAppSelector((state) => state.films);
 
   return (
     <div className="user-page">
@@ -14,16 +13,7 @@ function MyList() {
 
         <h1 className="page-title user-page__title">My list</h1>
 
-        <ul className="user-block">
-          <li className="user-block__item">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-            </div>
-          </li>
-          <li className="user-block__item">
-            <Link to={AppRoute.Login} className="user-block__link">Sign out</Link>
-          </li>
-        </ul>
+        <User />
       </header>
 
       <section className="catalog">
