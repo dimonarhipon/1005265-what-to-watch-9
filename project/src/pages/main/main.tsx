@@ -8,7 +8,6 @@ import User from '../../components/user/user';
 import ShowMore from '../../components/show-more/show-more';
 import { AppRoute, MAX_COUNT_FILMS } from '../../const';
 import { getGenreFilms } from '../../store/action';
-import {loadPromoFilmAction} from '../../store/api-action';
 
 
 function Main() {
@@ -23,7 +22,6 @@ function Main() {
 
   useEffect(() => {
     dispatch(getGenreFilms({ genre: genreFilms }));
-    dispatch(loadPromoFilmAction());
   }, [genreFilms]);
 
   const {backgroundImage, posterImage, name, genre, released} = films[0];
