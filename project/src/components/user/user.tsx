@@ -6,11 +6,9 @@ import { useAppSelector, useAppDispatch } from '../../hooks';
 function User() {
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  /* eslint-disable no-console */
   const logoutHandler = (evt: React.MouseEvent<HTMLElement>) => {
     evt.preventDefault();
     dispatch(logoutAction());
-    console.log('out');
   };
 
   return (
@@ -23,9 +21,9 @@ function User() {
 
       {authorizationStatus === AuthorizationStatus.Auth
         ? (
-          <a className="user-block__link" onClick={logoutHandler}>
+          <Link to={AppRoute.Root} className="user-block__link" onClick={logoutHandler}>
             Sign out
-          </a>
+          </Link>
         ) : (
           <Link to={AppRoute.Login} className="user-block__link">
             Sign in

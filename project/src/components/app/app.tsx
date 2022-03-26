@@ -8,20 +8,10 @@ import Film from '../../pages/film/film';
 import AddReview from '../../pages/add-review/add-review';
 import Player from '../../pages/player/player';
 import Error from '../error/error';
-import Loader from '../loader/loader';
 import { BrowserRouter } from 'react-router-dom';
-import { useAppSelector } from '../../hooks';
 
 
 function App() {
-  const isDataLoaded = useAppSelector((state) => state.isDataLoaded);
-
-  if (isDataLoaded) {
-    return (
-      <Loader />
-    );
-  }
-
   return (
     <BrowserRouter>
       <Routes>
