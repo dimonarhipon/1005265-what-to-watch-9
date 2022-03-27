@@ -1,6 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {api, store} from './index';
-import {loadFilmsSucces, loadFilmsRequest, requireAuthorization, loadPromoFilm} from '../store/action';
+import {getGenreFilms} from './genre-process/genre-films-process';
+import {requireAuthorization} from './user-process/user-process';
+import {loadFilmsSucces, loadFilmsRequest} from './films-process/films-process';
+import {loadPromoFilm} from './promo-film-process/promo-film-process';
 import { APIRoute, AuthorizationStatus, AuthData, UserData } from '../const';
 import {dataFilm, dataFilms} from '../types/data';
 import { saveToken, dropToken } from '../services/token';
@@ -13,6 +16,7 @@ export const loadFilmsAction = createAsyncThunk(
       store.dispatch(loadFilmsRequest());
       const {data} = await api.get<dataFilms>(APIRoute.Films);
       store.dispatch(loadFilmsSucces(data));
+      store.dispatch(getGenreFilms(data));
     } catch (error) {
       errorHandle(error);
     }

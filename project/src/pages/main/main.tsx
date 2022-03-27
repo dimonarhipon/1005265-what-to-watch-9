@@ -1,103 +1,16 @@
-import {useEffect, useState} from 'react';
-import { useAppSelector, useAppDispatch } from '../../hooks';
-import { Link } from 'react-router-dom';
-import CardList from '../../components/card-list/card-list';
-import GenreList from '../../components/genre-list/genre-list';
-import Logo from '../../components/logo/logo';
-import User from '../../components/user/user';
-import ShowMore from '../../components/show-more/show-more';
-import { AppRoute, MAX_COUNT_FILMS } from '../../const';
-import { getGenreFilms } from '../../store/action';
-
+import Promo from '../../components/promo/promo';
+import Catalog from '../../components/catalog/catalog';
+import Footer from '../../components/footer/footer';
 
 function Main() {
-  const {
-    // promoFilm,
-    genreFilms,
-    filteredFilms,
-    films,
-  } = useAppSelector((state) => state);
-  const [count, setCount] = useState(MAX_COUNT_FILMS);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(getGenreFilms({ genre: genreFilms }));
-  }, [genreFilms]);
-
-  const {backgroundImage, posterImage, name, genre, released} = films[0];
-  const cardList = filteredFilms.slice(0, count);
-
-  const showMoreHandler = (): void => {
-    setCount(count + MAX_COUNT_FILMS);
-  };
-
   return (
     <>
-      <section className="film-card">
-        <div className="film-card__bg">
-          <img src={backgroundImage} alt={name} />
-        </div>
-
-        <h1 className="visually-hidden">WTW</h1>
-
-        <header className="page-header film-card__head">
-          <Logo />
-
-          <User />
-        </header>
-
-        <div className="film-card__wrap">
-          <div className="film-card__info">
-            <div className="film-card__poster">
-              <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
-            </div>
-
-            <div className="film-card__desc">
-              <h2 className="film-card__title">{name}</h2>
-              <p className="film-card__meta">
-                <span className="film-card__genre">{genre}</span>
-                <span className="film-card__year">{released}</span>
-              </p>
-
-              <div className="film-card__buttons">
-                <Link to={AppRoute.Player} className="btn btn--play film-card__button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </Link>
-                <Link to={AppRoute.MyList} className="btn btn--list film-card__button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Promo />
 
       <div className="page-content">
-        <section className="catalog">
-          <h2 className="catalog__title visually-hidden">Catalog</h2>
+        <Catalog />
 
-          <GenreList films={films} currentGenre={genreFilms} />
-          <CardList films={cardList} />
-
-          {filteredFilms.length - count > 0
-            ? <ShowMore showMoreHandler={showMoreHandler}/>
-            : null}
-
-        </section>
-
-        <footer className="page-footer">
-          <Logo isLight />
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </>
   );

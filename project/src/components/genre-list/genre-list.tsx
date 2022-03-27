@@ -1,6 +1,6 @@
 import {Genres} from '../../const';
 import { useAppDispatch } from '../../hooks';
-import { changeGenre, getGenreFilms } from '../../store/action';
+import { changeGenre, getGenreFilms } from '../../store/genre-process/genre-films-process';
 import {dataFilms} from '../../types/data';
 
 type typeProps = {
@@ -14,8 +14,8 @@ function GenreList ({films, currentGenre}: typeProps) {
   const uniqueGenres = [Genres.AllGenres, ...Array.from(new Set(genres))];
 
   const handleGenreClick = (genre: string) => {
-    dispatch(changeGenre({ genre }));
-    dispatch(getGenreFilms({ genre }));
+    dispatch(changeGenre(genre));
+    dispatch(getGenreFilms(films));
   };
 
   return (

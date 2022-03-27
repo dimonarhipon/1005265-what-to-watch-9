@@ -11,7 +11,7 @@ type typeProps = {
 
 
 function AddReview({filmId = 0}: typeProps) {
-  const {films} = useAppSelector((state) => state);
+  const {films} = useAppSelector(({FILMS}) => FILMS);
   const {
     backgroundColor,
     backgroundImage,

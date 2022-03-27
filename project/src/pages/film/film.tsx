@@ -6,6 +6,7 @@ import {Link, useLocation} from 'react-router-dom';
 import Tabs from '../../components/tabs/tabs';
 import User from '../../components/user/user';
 import { useAppSelector } from '../../hooks';
+import Footer from '../../components/footer/footer';
 
 type typeProps = {
   filmId?: number,
@@ -13,7 +14,7 @@ type typeProps = {
 
 function Film({filmId = 0}: typeProps) {
   const MAX_FILMS = 4;
-  const {films} = useAppSelector((state) => state);
+  const {films} = useAppSelector(({FILMS}) => FILMS);
   const {backgroundColor, backgroundImage, name, genre, released, posterImage} = films[filmId];
 
   let location = useLocation().hash.substr(1);
@@ -109,13 +110,7 @@ function Film({filmId = 0}: typeProps) {
           <CardList films={films.slice(0, MAX_FILMS)} />
         </section>
 
-        <footer className="page-footer">
-          <Logo isLight />
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </>
   );

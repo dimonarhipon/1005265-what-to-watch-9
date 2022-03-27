@@ -3,7 +3,10 @@ import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
 
 function Player() {
-  const {films} = useAppSelector((state) => state);
+  /* eslint-disable no-console */
+  // const {id} = useParams();
+  // console.log(id);
+  const {films} = useAppSelector(({FILMS}) => FILMS);
   const {videoLink, posterImage} = films[0];
 
   return (

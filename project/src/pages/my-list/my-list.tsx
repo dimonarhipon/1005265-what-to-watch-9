@@ -1,10 +1,11 @@
 import CardList from '../../components/card-list/card-list';
+import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
 import User from '../../components/user/user';
 import { useAppSelector } from '../../hooks';
 
 function MyList() {
-  const films = useAppSelector((state) => state.films);
+  const {films} = useAppSelector(({FILMS}) => FILMS);
 
   return (
     <div className="user-page">
@@ -24,13 +25,7 @@ function MyList() {
         </div>
       </section>
 
-      <footer className="page-footer">
-        <Logo isLight />
-
-        <div className="copyright">
-          <p>© 2019 What to watch Ltd.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
