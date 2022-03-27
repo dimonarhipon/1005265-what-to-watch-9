@@ -4,16 +4,17 @@ import CardList from '../../components/card-list/card-list';
 import GenreList from '../../components/genre-list/genre-list';
 import ShowMore from '../../components/show-more/show-more';
 import { MAX_COUNT_FILMS } from '../../const';
-import { getGenreFilms } from '../../store/action';
+import { getGenreFilms } from '../../store/genre-process/genre-films-process';
 
 
 function Catalog() {
-  const { genreFilms, filteredFilms, films} = useAppSelector((state) => state);
+  const {films} = useAppSelector(({FILMS}) => FILMS);
+  const { genreFilms, filteredFilms} = useAppSelector(({GENRE}) => GENRE);
+
   const [count, setCount] = useState(MAX_COUNT_FILMS);
   const dispatch = useAppDispatch();
-
   useEffect(() => {
-    dispatch(getGenreFilms({ genre: genreFilms }));
+    dispatch(getGenreFilms(films));
   }, [genreFilms]);
 
   const cardList = filteredFilms.slice(0, count);
@@ -21,7 +22,6 @@ function Catalog() {
   const showMoreHandler = (): void => {
     setCount(count + MAX_COUNT_FILMS);
   };
-
 
   return (
     <section className="catalog">

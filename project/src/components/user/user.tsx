@@ -5,7 +5,7 @@ import { useAppSelector, useAppDispatch } from '../../hooks';
 
 function User() {
   const dispatch = useAppDispatch();
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
   const logoutHandler = (evt: React.MouseEvent<HTMLElement>) => {
     evt.preventDefault();
     dispatch(logoutAction());

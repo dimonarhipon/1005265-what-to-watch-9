@@ -5,7 +5,7 @@ import User from '../../components/user/user';
 import { useAppSelector } from '../../hooks';
 
 function Promo() {
-  const promoFilm = useAppSelector((state) => state.promoFilm);
+  const {promoFilm} = useAppSelector(({PROMO}) => PROMO);
 
   return (
     <section className="film-card">

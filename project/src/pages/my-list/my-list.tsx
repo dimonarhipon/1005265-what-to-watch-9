@@ -5,7 +5,7 @@ import User from '../../components/user/user';
 import { useAppSelector } from '../../hooks';
 
 function MyList() {
-  const films = useAppSelector((state) => state.films);
+  const {films} = useAppSelector(({FILMS}) => FILMS);
 
   return (
     <div className="user-page">

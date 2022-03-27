@@ -6,7 +6,7 @@ function Player() {
   /* eslint-disable no-console */
   // const {id} = useParams();
   // console.log(id);
-  const {films} = useAppSelector((state) => state);
+  const {films} = useAppSelector(({FILMS}) => FILMS);
   const {videoLink, posterImage} = films[0];
 
   return (

@@ -13,12 +13,9 @@ type typeProps = {
 }
 
 function Film({filmId = 0}: typeProps) {
-  /* eslint-disable no-console */
   const MAX_FILMS = 4;
-  const {films} = useAppSelector((state) => state);
-  console.log(films);
+  const {films} = useAppSelector(({FILMS}) => FILMS);
   const {backgroundColor, backgroundImage, name, genre, released, posterImage} = films[filmId];
-  console.log(films);
 
   let location = useLocation().hash.substr(1);
   location = TabNames.Overview;

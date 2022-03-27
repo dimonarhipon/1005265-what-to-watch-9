@@ -1,3 +1,5 @@
+import { dataFilms, dataFilm } from './types/data';
+
 export const MAX_COUNT_FILMS = 8;
 
 export enum AppRoute {
@@ -59,3 +61,29 @@ export type UserData = {
 };
 
 export type ErrorType = unknown;
+
+export enum NameSpace {
+  genre = 'GENRE',
+  user = 'USER',
+  films = 'FILMS',
+  promo = 'PROMO',
+}
+
+export type FilmsProcess = {
+  films: dataFilms,
+  isDataLoaded: boolean,
+}
+
+export type PromoFilmProcess = {
+  promoFilm: dataFilm | null,
+}
+
+export type GenreProcess = {
+  filteredFilms: dataFilms,
+  genreFilms: string,
+  error: string,
+};
+
+export type UserProcess = {
+  authorizationStatus: AuthorizationStatus
+};
