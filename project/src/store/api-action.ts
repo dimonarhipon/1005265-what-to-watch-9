@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {api, store} from './index';
 import {getGenreFilms} from './genre-process/genre-films-process';
 import {requireAuthorization} from './user-process/user-process';
-import {loadFilmsSucces, loadFilmsRequest} from './films-process/films-process';
+import {loadFilmsSucces, loadFilmsRequest, loadFilmSucces, loadFilmRequest, loadError} from './films-process/films-process';
 import {loadPromoFilm} from './promo-film-process/promo-film-process';
 import { APIRoute, AuthorizationStatus, AuthData, UserData } from '../const';
 import {dataFilm, dataFilms} from '../types/data';
@@ -18,6 +18,19 @@ export const loadFilmsAction = createAsyncThunk(
       store.dispatch(loadFilmsSucces(data));
       store.dispatch(getGenreFilms(data));
     } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const loadFilmAction = createAsyncThunk('data/loadFiml',
+  async (filmId: string) => {
+    try {
+      store.dispatch(loadFilmRequest());
+      const {data} = await api.get<dataFilm>(`${APIRoute.Films}/${filmId}`);
+      store.dispatch(loadFilmSucces(data));
+    } catch (error) {
+      store.dispatch(loadError(error));
       errorHandle(error);
     }
   },
@@ -40,8 +53,8 @@ export const checkAuthAction = createAsyncThunk('user/requireAuthorization',
       await api.get<string>(APIRoute.Login);
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch(error) {
-      errorHandle(error);
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+      errorHandle(error);
     }
   },
 );

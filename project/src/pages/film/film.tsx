@@ -1,25 +1,40 @@
-import {useState, MouseEvent} from 'react';
-import {AppRoute, TabNames} from '../../const';
+import {useState, useEffect, MouseEvent} from 'react';
+import {AppRoute, TabNames, AuthorizationStatus} from '../../const';
 import Logo from '../../components/logo/logo';
+import Loader from '../../components/loader/loader';
 import CardList from '../../components/card-list/card-list';
-import {Link, useLocation} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import Tabs from '../../components/tabs/tabs';
 import User from '../../components/user/user';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { loadFilmAction } from '../../store/api-action';
 import Footer from '../../components/footer/footer';
 
-type typeProps = {
-  filmId?: number,
-}
-
-function Film({filmId = 0}: typeProps) {
+/* eslint-disable no-console */
+function Film() {
   const MAX_FILMS = 4;
-  const {films} = useAppSelector(({FILMS}) => FILMS);
-  const {backgroundColor, backgroundImage, name, genre, released, posterImage} = films[filmId];
+  const {id} = useParams();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (id) {
+      dispatch(loadFilmAction(id));
+    }
+  }, [dispatch, id]);
+
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
+  const {film, films, isDataLoaded} = useAppSelector(({FILMS}) => FILMS);
+
+  console.log(film, films, isDataLoaded);
 
   let location = useLocation().hash.substr(1);
   location = TabNames.Overview;
   const [activeTab, setActiveTab] = useState(location);
+
+  if (!film) {
+    return <Loader />;
+  }
 
   const changeTabHandler = (evt: MouseEvent<HTMLElement>) => {
     evt.preventDefault();
@@ -29,10 +44,13 @@ function Film({filmId = 0}: typeProps) {
 
   return (
     <>
-      <section className="film-card film-card--full" style={{backgroundColor: backgroundColor}} >
+      <section
+        className="film-card film-card--full"
+        style={{backgroundColor: film.backgroundColor}}
+      >
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={backgroundImage} alt={name} />
+            <img src={film.backgroundImage} alt={film.name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -45,10 +63,10 @@ function Film({filmId = 0}: typeProps) {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{name}</h2>
+              <h2 className="film-card__title">{film.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{genre}</span>
-                <span className="film-card__year">{released}</span>
+                <span className="film-card__genre">{film.genre}</span>
+                <span className="film-card__year">{film.released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -64,7 +82,13 @@ function Film({filmId = 0}: typeProps) {
                   </svg>
                   <span>My list</span>
                 </Link>
-                <Link to={`${AppRoute.Films}/${AppRoute.Review}`} className="btn film-card__button">Add review</Link>
+
+                {authorizationStatus === AuthorizationStatus.Auth
+                  ? (
+                    <Link to={`${AppRoute.Films}/${AppRoute.Review}`} className="btn film-card__button">Add review</Link>
+                  ) : (
+                    null
+                  )}
               </div>
             </div>
           </div>
@@ -73,7 +97,7 @@ function Film({filmId = 0}: typeProps) {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
+              <img src={film.posterImage} alt={`${film.name} poster`} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
@@ -98,7 +122,7 @@ function Film({filmId = 0}: typeProps) {
                   </li>
                 </ul>
               </nav>
-              <Tabs activeTab={activeTab} film={films[filmId]} />
+              <Tabs activeTab={activeTab} film={films[1]} />
             </div>
           </div>
         </div>
@@ -107,7 +131,9 @@ function Film({filmId = 0}: typeProps) {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <CardList films={films.slice(0, MAX_FILMS)} />
+
+          {isDataLoaded ? <Loader />
+            : <CardList films={films.slice(0, MAX_FILMS)} />}
         </section>
 
         <Footer />

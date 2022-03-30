@@ -72,6 +72,8 @@ export enum NameSpace {
 export type FilmsProcess = {
   films: dataFilms,
   isDataLoaded: boolean,
+  film: dataFilm | null,
+  error: string,
 }
 
 export type PromoFilmProcess = {
