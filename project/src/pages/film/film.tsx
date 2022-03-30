@@ -8,7 +8,7 @@ import {useLocation} from 'react-router-dom';
 import Tabs from '../../components/tabs/tabs';
 import User from '../../components/user/user';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { loadFilmAction } from '../../store/api-action';
+import { loadFilmAction, loadFilmSimilarAction } from '../../store/api-action';
 import Footer from '../../components/footer/footer';
 
 /* eslint-disable no-console */
@@ -20,13 +20,14 @@ function Film() {
   useEffect(() => {
     if (id) {
       dispatch(loadFilmAction(id));
+      dispatch(loadFilmSimilarAction(id));
     }
   }, [dispatch, id]);
 
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
-  const {film, films, isDataLoaded} = useAppSelector(({FILMS}) => FILMS);
+  const {film, similarFilms, isDataLoaded} = useAppSelector(({FILMS}) => FILMS);
 
-  console.log(film, films, isDataLoaded);
+  console.log(film, similarFilms, isDataLoaded);
 
   let location = useLocation().hash.substr(1);
   location = TabNames.Overview;
@@ -122,7 +123,7 @@ function Film() {
                   </li>
                 </ul>
               </nav>
-              <Tabs activeTab={activeTab} film={films[1]} />
+              <Tabs activeTab={activeTab} film={film} />
             </div>
           </div>
         </div>
@@ -133,7 +134,7 @@ function Film() {
           <h2 className="catalog__title">More like this</h2>
 
           {isDataLoaded ? <Loader />
-            : <CardList films={films.slice(0, MAX_FILMS)} />}
+            : <CardList films={similarFilms.slice(0, MAX_FILMS)} />}
         </section>
 
         <Footer />

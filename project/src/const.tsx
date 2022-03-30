@@ -18,6 +18,7 @@ export enum APIRoute {
   Favorite = '/favorite',
   Login = '/login',
   Logout = '/logout',
+  Similar = '/similar'
 }
 
 export enum TabNames {
@@ -73,6 +74,7 @@ export type FilmsProcess = {
   films: dataFilms,
   isDataLoaded: boolean,
   film: dataFilm | null,
+  similarFilms: dataFilms,
   error: string,
 }
 

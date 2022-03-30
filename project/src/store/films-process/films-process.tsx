@@ -5,6 +5,7 @@ import {FilmsProcess} from '../../const';
 const initialState: FilmsProcess = {
   films: [],
   film: null,
+  similarFilms: [],
   isDataLoaded: false,
   error: '',
 };
@@ -18,6 +19,14 @@ export const filmsProcess = createSlice({
       state.isDataLoaded = false;
     },
     loadFilmsRequest: (state) => {
+      state.isDataLoaded = true;
+    },
+
+    loadFilmSimilarSucces: (state, action) => {
+      state.similarFilms = action.payload;
+      state.isDataLoaded = false;
+    },
+    loadFilmSimilarRequest: (state) => {
       state.isDataLoaded = true;
     },
 
@@ -41,5 +50,7 @@ export const {
   loadFilmsRequest,
   loadFilmSucces,
   loadFilmRequest,
+  loadFilmSimilarSucces,
+  loadFilmSimilarRequest,
   loadError,
 } = filmsProcess.actions;
