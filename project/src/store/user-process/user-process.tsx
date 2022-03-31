@@ -5,7 +5,6 @@ import {UserProcess} from '../../const';
 const initialState: UserProcess = {
   authorizationStatus: AuthorizationStatus.Unknown,
 };
-/* eslint-disable no-console */
 
 export const userProcess = createSlice({
   name: NameSpace.user,
@@ -13,7 +12,6 @@ export const userProcess = createSlice({
   reducers: {
     requireAuthorization: (state, action) => {
       state.authorizationStatus = action.payload;
-      console.log(action);
     },
   },
 });

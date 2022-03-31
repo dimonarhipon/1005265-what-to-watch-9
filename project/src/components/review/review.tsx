@@ -1,21 +1,35 @@
+import { useParams, useNavigate } from 'react-router-dom';
 import { useState, FormEvent, ChangeEvent } from 'react';
+import { useAppDispatch } from '../../hooks';
+import {sendCommnetAction} from '../../store/api-action';
+import {AppRoute} from '../../const';
 
 function Review() {
-  const [text, setText] = useState('');
-  const [rating, setRating] = useState('1');
+  const [comment, setComment] = useState('');
+  const [rating, setRating] = useState(1);
+  const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
+  const {id} = useParams();
 
   const submitHandler = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    if (id) {
+      dispatch(sendCommnetAction({id, comment, rating}));
+      setComment('');
+      setRating(1);
+      navigate(`${AppRoute.Films}/${id}`);
+    }
   };
 
   const ratingChangeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
     const {value} = evt.target;
-    setRating(value);
+    setRating(+value);
   };
 
   const textChangeHandler = (evt: ChangeEvent<HTMLTextAreaElement>) => {
     const {value} = evt.target;
-    setText(value);
+    setComment(value);
   };
 
   return (
@@ -61,7 +75,7 @@ function Review() {
           id="review-text"
           placeholder="Review text"
           onChange={textChangeHandler}
-          value={text}
+          value={comment}
         >
         </textarea>
         <div className="add-review__submit">

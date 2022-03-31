@@ -8,12 +8,13 @@ import Film from '../../pages/film/film';
 import AddReview from '../../pages/add-review/add-review';
 import Player from '../../pages/player/player';
 import Error from '../error/error';
-import { BrowserRouter } from 'react-router-dom';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 
 function App() {
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route path={AppRoute.Root}>
           <Route index element={<Main />} />
@@ -30,7 +31,7 @@ function App() {
           <Route path={AppRoute.Films}>
             <Route index element={<Film />} />
             <Route path={AppRoute.Id} element={<Film />} />
-            <Route path={AppRoute.Review} element={
+            <Route path={AppRoute.Id + AppRoute.Review} element={
               <PrivateRoute>
                 <AddReview />
               </PrivateRoute>
@@ -41,9 +42,9 @@ function App() {
           <Route path={AppRoute.Player} element={<Player />} />
         </Route>
 
-        <Route path='*' element={<Error />} />
+        <Route path={AppRoute.Error} element={<Error />} />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

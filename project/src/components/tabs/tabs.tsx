@@ -17,7 +17,7 @@ function Tabs({film, activeTab}: typeProps) {
       case TabNames.Details:
         return <TabDetails film={item} />;
       case TabNames.Reviews:
-        return <TabReview film={item} />;
+        return <TabReview />;
       default:
         return '';
     }
