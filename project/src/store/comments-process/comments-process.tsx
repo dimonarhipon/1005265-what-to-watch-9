@@ -4,8 +4,6 @@ import {CommentsProcess} from '../../const';
 
 const initialState: CommentsProcess = {
   comments: [],
-  comment: '',
-  rating: 0,
   isDataLoaded: false,
   error: '',
 };
@@ -22,12 +20,11 @@ export const commentsProcess = createSlice({
       state.isDataLoaded = true;
     },
 
-    postCommentSuccess: (state, action) => {
-      state.comments = action.payload;
-      // state.comments = state.comments.push(action.payload);
+    postCommentSuccess: (state) => {
+      state.isDataLoaded = false;
     },
-    postCommentRequest: (state, action) => {
-      state.error = action.payload;
+    postCommentRequest: (state) => {
+      state.isDataLoaded = true;
     },
 
     loadError: (state, action) => {
@@ -37,4 +34,4 @@ export const commentsProcess = createSlice({
   },
 });
 
-export const {loadCommentsSuccess, loadCommentsRequest} = commentsProcess.actions;
+export const {loadCommentsSuccess, loadCommentsRequest, postCommentSuccess, postCommentRequest} = commentsProcess.actions;

@@ -8,7 +8,6 @@ import {useParams} from 'react-router-dom';
 import { loadFilmAction } from '../../store/api-action';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 
-/* eslint-disable no-console */
 function AddReview() {
   const {id} = useParams();
   const dispatch = useAppDispatch();
@@ -20,8 +19,6 @@ function AddReview() {
   }, [id]);
 
   const {film} = useAppSelector(({FILMS}) => FILMS);
-
-  console.log(film);
 
   return (
     <section className="film-card film-card--full" style={{backgroundColor: film?.backgroundColor}}>

@@ -3,9 +3,9 @@ import {api, store} from './index';
 import {getGenreFilms} from './genre-process/genre-films-process';
 import {requireAuthorization} from './user-process/user-process';
 import {loadFilmsSucces, loadFilmsRequest, loadFilmSucces, loadFilmRequest, loadFilmSimilarSucces, loadFilmSimilarRequest, loadError} from './films-process/films-process';
-import {loadCommentsSuccess, loadCommentsRequest} from './comments-process/comments-process';
+import {loadCommentsSuccess, loadCommentsRequest, postCommentSuccess, postCommentRequest} from './comments-process/comments-process';
 import {loadPromoFilm} from './promo-film-process/promo-film-process';
-import { APIRoute, AuthorizationStatus, AuthData, UserData } from '../const';
+import { APIRoute, AuthorizationStatus, AuthData, UserData, CommentData } from '../const';
 import {dataFilm, dataFilms, dataComments} from '../types/data';
 import { saveToken, dropToken } from '../services/token';
 import errorHandle from '../services/error-handle';
@@ -74,16 +74,17 @@ export const loadCommentsAction = createAsyncThunk('data/loadComments',
   },
 );
 
-// export const sendCommnetAction = createAsyncThunk('data/sendComment',
-//   async (filmId: string, {rating, comment}: CommentData) => {
-//     try {
-//       const {data: {token}} = await api.post<CommentData>(`${APIRoute.Comments}/${filmId}`, {rating, comment});
-//       saveToken(token);
-//     } catch(error) {
-//       errorHandle(error);
-//     }
-//   },
-// );
+export const sendCommnetAction = createAsyncThunk('data/sendComment',
+  async ({id, rating, comment}: CommentData) => {
+    try {
+      store.dispatch(postCommentRequest());
+      await api.post<CommentData>(`${APIRoute.Comments}/${id}`, {rating, comment});
+      store.dispatch(postCommentSuccess());
+    } catch(error) {
+      errorHandle(error);
+    }
+  },
+);
 
 export const checkAuthAction = createAsyncThunk('user/requireAuthorization',
   async () => {

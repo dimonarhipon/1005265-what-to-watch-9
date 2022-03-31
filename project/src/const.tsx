@@ -63,9 +63,9 @@ export type UserData = {
 };
 
 export type CommentData = {
+  id: string,
   rating: number,
   comment: string,
-  token: string,
 }
 
 export type ErrorType = unknown;
@@ -98,8 +98,6 @@ export type GenreProcess = {
 
 export type CommentsProcess = {
   comments: [],
-  comment: string,
-  rating: number,
   isDataLoaded: boolean,
   error: string,
 }
