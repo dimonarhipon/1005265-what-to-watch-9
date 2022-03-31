@@ -1,5 +1,7 @@
+import { AppRoute } from '../const';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {api, store} from './index';
+import {redirectToRoute} from './action';
 import {getGenreFilms} from './genre-process/genre-films-process';
 import {requireAuthorization} from './user-process/user-process';
 import {loadFilmsSucces, loadFilmsRequest, loadFilmSucces, loadFilmRequest, loadFilmSimilarSucces, loadFilmSimilarRequest, loadError} from './films-process/films-process';
@@ -31,6 +33,7 @@ export const loadFilmAction = createAsyncThunk('data/loadFiml',
       const {data} = await api.get<dataFilm>(`${APIRoute.Films}/${filmId}`);
       store.dispatch(loadFilmSucces(data));
     } catch (error) {
+      store.dispatch(redirectToRoute(AppRoute.Error));
       store.dispatch(loadError(error));
       errorHandle(error);
     }

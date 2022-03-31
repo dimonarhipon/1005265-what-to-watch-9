@@ -10,6 +10,7 @@ export enum AppRoute {
   Id = ':id',
   Review = '/review',
   Player = '/player',
+  Error = '*',
 }
 
 export enum APIRoute {
