@@ -30,7 +30,7 @@ function App() {
           <Route path={AppRoute.Films}>
             <Route index element={<Film />} />
             <Route path={AppRoute.Id} element={<Film />} />
-            <Route path={AppRoute.Review} element={
+            <Route path={AppRoute.Id + AppRoute.Review} element={
               <PrivateRoute>
                 <AddReview />
               </PrivateRoute>

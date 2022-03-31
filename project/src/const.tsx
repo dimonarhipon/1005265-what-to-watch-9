@@ -8,8 +8,8 @@ export enum AppRoute {
   MyList = '/mylist',
   Films = '/films',
   Id = ':id',
-  Review = ':id/review',
-  Player = '/player/:id',
+  Review = '/review',
+  Player = '/player',
 }
 
 export enum APIRoute {
@@ -18,7 +18,8 @@ export enum APIRoute {
   Favorite = '/favorite',
   Login = '/login',
   Logout = '/logout',
-  Similar = '/similar'
+  Similar = '/similar',
+  Comments = '/comments'
 }
 
 export enum TabNames {
@@ -61,6 +62,12 @@ export type UserData = {
   token: string;
 };
 
+export type CommentData = {
+  rating: number,
+  comment: string,
+  token: string,
+}
+
 export type ErrorType = unknown;
 
 export enum NameSpace {
@@ -68,6 +75,7 @@ export enum NameSpace {
   user = 'USER',
   films = 'FILMS',
   promo = 'PROMO',
+  comments = 'COMMENTS'
 }
 
 export type FilmsProcess = {
@@ -87,6 +95,14 @@ export type GenreProcess = {
   genreFilms: string,
   error: string,
 };
+
+export type CommentsProcess = {
+  comments: [],
+  comment: string,
+  rating: number,
+  isDataLoaded: boolean,
+  error: string,
+}
 
 export type UserProcess = {
   authorizationStatus: AuthorizationStatus

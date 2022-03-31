@@ -20,4 +20,15 @@ export type dataFilm = {
 
 export type dataFilms = dataFilm[];
 
+export type dataComment = {
+  id: number,
+  comment: string,
+  rating: number,
+  date: string,
+  user: {
+    id: number,
+    name: string,
+  },
+}
 
+export type dataComments = dataComments[];

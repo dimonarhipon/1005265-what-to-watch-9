@@ -11,7 +11,6 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loadFilmAction, loadFilmSimilarAction } from '../../store/api-action';
 import Footer from '../../components/footer/footer';
 
-/* eslint-disable no-console */
 function Film() {
   const MAX_FILMS = 4;
   const {id} = useParams();
@@ -27,7 +26,6 @@ function Film() {
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
   const {film, similarFilms, isDataLoaded} = useAppSelector(({FILMS}) => FILMS);
 
-  console.log(film, similarFilms, isDataLoaded);
 
   let location = useLocation().hash.substr(1);
   location = TabNames.Overview;
@@ -86,7 +84,7 @@ function Film() {
 
                 {authorizationStatus === AuthorizationStatus.Auth
                   ? (
-                    <Link to={`${AppRoute.Films}/${AppRoute.Review}`} className="btn film-card__button">Add review</Link>
+                    <Link to={`${AppRoute.Films}/${id + AppRoute.Review}`} className="btn film-card__button">Add review</Link>
                   ) : (
                     null
                   )}
