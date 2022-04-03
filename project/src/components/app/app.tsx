@@ -39,7 +39,10 @@ function App() {
             />
           </Route>
 
-          <Route path={AppRoute.Player} element={<Player />} />
+          <Route path={AppRoute.Player} >
+            <Route index element={<Player />} />
+            <Route path={AppRoute.Id} element={<Player /> } />
+          </Route>
         </Route>
 
         <Route path={AppRoute.Error} element={<Error />} />

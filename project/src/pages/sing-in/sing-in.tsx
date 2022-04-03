@@ -11,17 +11,17 @@ function SingIn() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const changeEmailHandler = (evt: ChangeEvent<HTMLInputElement>) => {
+  const handleEmailChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const value = evt.target.value;
     setEmail(value);
   };
 
-  const changePasswordHandler = (evt: ChangeEvent<HTMLInputElement>) => {
+  const handlePasswordChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const value = evt.target.value;
     setPassword(value);
   };
 
-  const submitHandler = (evt: MouseEvent<HTMLButtonElement>) => {
+  const handleFormSubmit = (evt: MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
 
     dispatch(loginAction({email, password}));
@@ -46,7 +46,7 @@ function SingIn() {
                 placeholder="Email address"
                 name="user-email"
                 id="user-email"
-                onChange={changeEmailHandler}
+                onChange={handleEmailChange}
                 value={email}
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
@@ -58,7 +58,7 @@ function SingIn() {
                 placeholder="Password"
                 name="user-password"
                 id="user-password"
-                onChange={changePasswordHandler}
+                onChange={handlePasswordChange}
                 value={password}
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
@@ -68,7 +68,7 @@ function SingIn() {
             <button
               className="sign-in__btn"
               type="submit"
-              onClick={submitHandler}
+              onSubmit={handleFormSubmit}
             >
               Sign in
             </button>

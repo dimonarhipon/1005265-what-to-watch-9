@@ -6,7 +6,8 @@ import { useAppSelector, useAppDispatch } from '../../hooks';
 function User() {
   const dispatch = useAppDispatch();
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
-  const logoutHandler = (evt: React.MouseEvent<HTMLElement>) => {
+
+  const handleStatusClick = (evt: React.MouseEvent<HTMLElement>) => {
     evt.preventDefault();
     dispatch(logoutAction());
   };
@@ -21,7 +22,7 @@ function User() {
 
       {authorizationStatus === AuthorizationStatus.Auth
         ? (
-          <Link to={AppRoute.Root} className="user-block__link" onClick={logoutHandler}>
+          <Link to={AppRoute.Root} className="user-block__link" onClick={handleStatusClick}>
             Sign out
           </Link>
         ) : (

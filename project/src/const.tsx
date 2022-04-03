@@ -20,7 +20,8 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
   Similar = '/similar',
-  Comments = '/comments'
+  Comments = '/comments',
+  Status = '/status',
 }
 
 export enum TabNames {
@@ -38,6 +39,14 @@ export enum Genres {
   Thriller = 'Thriller',
   Horror = 'Horror',
   Western = 'Western',
+}
+
+export enum Rating {
+  Bad = 'Bad',
+  Normal = 'Normal',
+  Good = 'Good',
+  VeryGood = 'Very good',
+  Awesome = 'Awesome',
 }
 
 export enum AuthorizationStatus {
@@ -69,6 +78,11 @@ export type CommentData = {
   comment: string,
 }
 
+export type FavoriteData = {
+  id: string,
+  status: number,
+}
+
 export type ErrorType = unknown;
 
 export enum NameSpace {
@@ -76,7 +90,8 @@ export enum NameSpace {
   user = 'USER',
   films = 'FILMS',
   promo = 'PROMO',
-  comments = 'COMMENTS'
+  comments = 'COMMENTS',
+  favorite = 'FAVORITE',
 }
 
 export type FilmsProcess = {
@@ -84,6 +99,12 @@ export type FilmsProcess = {
   isDataLoaded: boolean,
   film: dataFilm | null,
   similarFilms: dataFilms,
+  error: string,
+}
+
+export type FavoriteProcess = {
+  favorite: dataFilms,
+  isDataLoaded: boolean,
   error: string,
 }
 

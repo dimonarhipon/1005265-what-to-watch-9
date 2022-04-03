@@ -4,10 +4,11 @@ import {api, store} from './index';
 import {redirectToRoute} from './action';
 import {getGenreFilms} from './genre-process/genre-films-process';
 import {requireAuthorization} from './user-process/user-process';
-import {loadFilmsSucces, loadFilmsRequest, loadFilmSucces, loadFilmRequest, loadFilmSimilarSucces, loadFilmSimilarRequest, loadError} from './films-process/films-process';
+import {loadFilmsSuccess, loadFilmsRequest, loadFilmSuccess, loadFilmRequest, loadFilmSimilarSuccess, loadFilmSimilarRequest, loadError} from './films-process/films-process';
+import {loadFavoriteSuccess, loadFavoriteRequest, postFavoriteRequest, postFavoriteSuccess} from './favorite-process/favorite-process';
 import {loadCommentsSuccess, loadCommentsRequest, postCommentSuccess, postCommentRequest} from './comments-process/comments-process';
 import {loadPromoFilm} from './promo-film-process/promo-film-process';
-import { APIRoute, AuthorizationStatus, AuthData, UserData, CommentData } from '../const';
+import { APIRoute, AuthorizationStatus, AuthData, UserData, CommentData, FavoriteData } from '../const';
 import {dataFilm, dataFilms, dataComments} from '../types/data';
 import { saveToken, dropToken } from '../services/token';
 import errorHandle from '../services/error-handle';
@@ -18,7 +19,7 @@ export const loadFilmsAction = createAsyncThunk(
     try {
       store.dispatch(loadFilmsRequest());
       const {data} = await api.get<dataFilms>(APIRoute.Films);
-      store.dispatch(loadFilmsSucces(data));
+      store.dispatch(loadFilmsSuccess(data));
       store.dispatch(getGenreFilms(data));
     } catch (error) {
       errorHandle(error);
@@ -31,7 +32,7 @@ export const loadFilmAction = createAsyncThunk('data/loadFiml',
     try {
       store.dispatch(loadFilmRequest());
       const {data} = await api.get<dataFilm>(`${APIRoute.Films}/${filmId}`);
-      store.dispatch(loadFilmSucces(data));
+      store.dispatch(loadFilmSuccess(data));
     } catch (error) {
       store.dispatch(redirectToRoute(AppRoute.Error));
       store.dispatch(loadError(error));
@@ -45,7 +46,7 @@ export const loadFilmSimilarAction = createAsyncThunk('data/loadFimlSimilar',
     try {
       store.dispatch(loadFilmSimilarRequest());
       const {data} = await api.get<dataFilms>(`${APIRoute.Films}/${filmId}${APIRoute.Similar}`);
-      store.dispatch(loadFilmSimilarSucces(data));
+      store.dispatch(loadFilmSimilarSuccess(data));
     } catch (error) {
       store.dispatch(loadError(error));
       errorHandle(error);
@@ -59,6 +60,31 @@ export const loadPromoFilmAction = createAsyncThunk('loadPromoFilm',
       const {data} = await api.get<dataFilm>(APIRoute.FilmPromo);
       store.dispatch(loadPromoFilm(data));
     } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const loadFavofiteAction = createAsyncThunk('data/loadFavorite',
+  async () => {
+    try {
+      store.dispatch(loadFavoriteRequest());
+      const {data} = await api.get<dataFilms>(APIRoute.Favorite);
+      store.dispatch(loadFavoriteSuccess(data));
+    }
+    catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const changeFavorite = createAsyncThunk('data/changeFavorite',
+  async ({id, status}: FavoriteData) => {
+    try {
+      store.dispatch(postFavoriteRequest());
+      await api.post<FavoriteData>(`${APIRoute.Favorite}/${id + APIRoute.Status}`, status);
+      store.dispatch(postFavoriteSuccess());
+    } catch(error) {
       errorHandle(error);
     }
   },
