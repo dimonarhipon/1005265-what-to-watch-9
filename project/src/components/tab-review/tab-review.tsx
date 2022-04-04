@@ -3,9 +3,9 @@ import {useParams} from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loadCommentsAction} from '../../store/api-action';
 import Loader from '../../components/loader/loader';
+import {dataComment} from '../../types/data';
+import dayjs from 'dayjs';
 
-
-/* eslint-disable no-console */
 function TabReview() {
 
   const {id} = useParams();
@@ -31,22 +31,25 @@ function TabReview() {
         gap: '30px',
       }}
     >
-      {comments.map(({ comment, rating, date}) => (
-        <div className="review" key={rating}>
-          <blockquote className="review__quote">
-            <p className="review__text">
-              {comment}
-            </p>
+      {comments.map(({ comment, rating, date, user}: dataComment) => {
+        const formatDate = dayjs(date).format('MMMM DD, YYYY');
+        return (
+          <div className="review" key={rating}>
+            <blockquote className="review__quote">
+              <p className="review__text">
+                {comment}
+              </p>
 
-            <footer className="review__details">
-              <cite className="review__author"></cite>
-              <time className="review__date" dateTime="2016-12-24">{date}</time>
-            </footer>
-          </blockquote>
+              <footer className="review__details">
+                <cite className="review__author">{user.name}</cite>
+                <time className="review__date" dateTime={formatDate}>{formatDate}</time>
+              </footer>
+            </blockquote>
 
-          <div className="review__rating">{rating}</div>
-        </div>
-      ))}
+            <div className="review__rating">{rating}</div>
+          </div>
+        );
+      })}
     </div>
   );
 }

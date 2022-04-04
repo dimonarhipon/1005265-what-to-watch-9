@@ -14,7 +14,7 @@ export const filmsProcess = createSlice({
   name: NameSpace.films,
   initialState,
   reducers: {
-    loadFilmsSucces: (state, action) => {
+    loadFilmsSuccess: (state, action) => {
       state.films = action.payload;
       state.isDataLoaded = false;
     },
@@ -22,7 +22,7 @@ export const filmsProcess = createSlice({
       state.isDataLoaded = true;
     },
 
-    loadFilmSimilarSucces: (state, action) => {
+    loadFilmSimilarSuccess: (state, action) => {
       state.similarFilms = action.payload;
       state.isDataLoaded = false;
     },
@@ -30,7 +30,7 @@ export const filmsProcess = createSlice({
       state.isDataLoaded = true;
     },
 
-    loadFilmSucces: (state, action) => {
+    loadFilmSuccess: (state, action) => {
       state.film = action.payload;
       state.isDataLoaded = false;
     },
@@ -46,11 +46,11 @@ export const filmsProcess = createSlice({
 });
 
 export const {
-  loadFilmsSucces,
+  loadFilmsSuccess,
   loadFilmsRequest,
-  loadFilmSucces,
+  loadFilmSuccess,
   loadFilmRequest,
-  loadFilmSimilarSucces,
+  loadFilmSimilarSuccess,
   loadFilmSimilarRequest,
   loadError,
 } = filmsProcess.actions;

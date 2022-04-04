@@ -8,9 +8,10 @@ import {useLocation} from 'react-router-dom';
 import Tabs from '../../components/tabs/tabs';
 import User from '../../components/user/user';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { loadFilmAction, loadFilmSimilarAction } from '../../store/api-action';
+import { loadFilmAction, loadFilmSimilarAction, changeFavorite } from '../../store/api-action';
 import Footer from '../../components/footer/footer';
 
+/* eslint-disable no-console */
 function Film() {
   const MAX_FILMS = 4;
   const {id} = useParams();
@@ -35,10 +36,19 @@ function Film() {
     return <Loader />;
   }
 
-  const changeTabHandler = (evt: MouseEvent<HTMLElement>) => {
+  const handleTabClick = (evt: MouseEvent<HTMLElement>) => {
     evt.preventDefault();
     const value = (evt.target as HTMLAnchorElement).hash.substr(1);
     setActiveTab(value);
+  };
+
+  const handleFavoriteClick = (evt: MouseEvent<HTMLElement>) => {
+    evt.preventDefault();
+
+    if (id) {
+      const status = film.isFavorite ? 1 : 0;
+      dispatch(changeFavorite({id, status}));
+    }
   };
 
   return (
@@ -69,18 +79,20 @@ function Film() {
               </p>
 
               <div className="film-card__buttons">
-                <Link to={AppRoute.Player} className="btn btn--play film-card__button">
+                <Link to={`${AppRoute.Player}/${id}`} className="btn btn--play film-card__button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
                 </Link>
-                <Link to={AppRoute.MyList} className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
+
+                <button className="btn btn--list film-card__button" onClick={handleFavoriteClick}>
+                  {film?.isFavorite
+                    ? <svg viewBox="0 0 18 14" width="18" height="14"><use xlinkHref="#in-list"></use></svg>
+                    : <svg viewBox="0 0 19 20" width="19" height="20"><use xlinkHref="#add"></use></svg>}
+
                   <span>My list</span>
-                </Link>
+                </button>
 
                 {authorizationStatus === AuthorizationStatus.Auth
                   ? (
@@ -101,7 +113,7 @@ function Film() {
 
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list" onClick={changeTabHandler} >
+                <ul className="film-nav__list" onClick={handleTabClick} >
                   <li
                     className={`film-nav__item ${activeTab.includes(TabNames.Overview) ? 'film-nav__item--active' : ''}`}
                   >

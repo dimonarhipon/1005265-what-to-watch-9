@@ -19,7 +19,7 @@ function Catalog() {
 
   const cardList = filteredFilms.slice(0, count);
 
-  const showMoreHandler = (): void => {
+  const handlerShowMoreClick = (): void => {
     setCount(count + MAX_COUNT_FILMS);
   };
 
@@ -29,7 +29,7 @@ function Catalog() {
 
       <GenreList films={films} currentGenre={genreFilms} />
       <CardList films={cardList} />{filteredFilms.length - count > 0
-        ? <ShowMore showMoreHandler={showMoreHandler}/>
+        ? <ShowMore handlerShowMoreClick={handlerShowMoreClick}/>
         : null}
 
     </section>

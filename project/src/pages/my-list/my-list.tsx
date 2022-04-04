@@ -5,7 +5,7 @@ import User from '../../components/user/user';
 import { useAppSelector } from '../../hooks';
 
 function MyList() {
-  const {films} = useAppSelector(({FILMS}) => FILMS);
+  const {favorite} = useAppSelector(({FAVORITE}) => FAVORITE);
 
   return (
     <div className="user-page">
@@ -21,7 +21,7 @@ function MyList() {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <div className="catalog__films-list">
-          <CardList films={films} />
+          <CardList films={favorite} />
         </div>
       </section>
 

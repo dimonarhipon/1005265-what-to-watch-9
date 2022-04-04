@@ -4,6 +4,9 @@ import { useAppDispatch } from '../../hooks';
 import {sendCommnetAction} from '../../store/api-action';
 import {AppRoute} from '../../const';
 
+const MIN_LENGTH_TEXT = 50;
+const MAX_LENGTH_TEXT = 400;
+
 function Review() {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(1);
@@ -76,6 +79,8 @@ function Review() {
           placeholder="Review text"
           onChange={textChangeHandler}
           value={comment}
+          minLength={MIN_LENGTH_TEXT}
+          maxLength={MAX_LENGTH_TEXT}
         >
         </textarea>
         <div className="add-review__submit">
