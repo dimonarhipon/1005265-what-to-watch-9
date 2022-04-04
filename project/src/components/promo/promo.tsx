@@ -12,7 +12,7 @@ function Promo() {
 
   useEffect(() => {
     dispatch(loadPromoFilmAction());
-  }, [dispatch, promoFilm]);
+  }, [dispatch]);
 
   const choiceFavoriteHandler = () => {
     if (promoFilm) {
