@@ -23,7 +23,7 @@ function Player() {
 
 
   const [playerState, setPlayerState] = useState({
-    isPlaying: false,
+    isPlaying: true,
     progress: 0,
     videoDuration: videoCurrent?.duration,
   });
@@ -121,7 +121,7 @@ function Player() {
               Toggler
             </div>
           </div>
-          <div className="player__time-value">{hours}:{minutes}:{seconds}</div>
+          <div className="player__time-value">-{hours}:{minutes}:{seconds}</div>
         </div>
         <div className="player__controls-row">
           <button onClick={handlePlayToggle} type="button" className="player__play">

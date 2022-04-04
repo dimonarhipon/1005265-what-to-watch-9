@@ -15,9 +15,9 @@ function User() {
   return (
     <ul className="user-block">
       <li className="user-block__item">
-        <div className="user-block__avatar">
+        <Link className="user-block__avatar" to={AppRoute.MyList}>
           <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-        </div>
+        </Link>
       </li>
 
       {authorizationStatus === AuthorizationStatus.Auth

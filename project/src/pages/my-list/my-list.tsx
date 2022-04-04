@@ -1,10 +1,16 @@
+import { useEffect } from 'react';
 import CardList from '../../components/card-list/card-list';
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
 import User from '../../components/user/user';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import {loadFavofiteAction} from '../../store/api-action';
 
 function MyList() {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(loadFavofiteAction());
+  }, [dispatch]);
   const {favorite} = useAppSelector(({FAVORITE}) => FAVORITE);
 
   return (
@@ -20,9 +26,7 @@ function MyList() {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <div className="catalog__films-list">
-          <CardList films={favorite} />
-        </div>
+        <CardList films={favorite} />
       </section>
 
       <Footer />

@@ -21,7 +21,6 @@ export enum APIRoute {
   Logout = '/logout',
   Similar = '/similar',
   Comments = '/comments',
-  Status = '/status',
 }
 
 export enum TabNames {

@@ -21,7 +21,7 @@ function SingIn() {
     setPassword(value);
   };
 
-  const handleFormSubmit = (evt: MouseEvent<HTMLButtonElement>) => {
+  const handleFormSubmit = (evt: MouseEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     dispatch(loginAction({email, password}));
@@ -37,7 +37,7 @@ function SingIn() {
       </header>
 
       <div className="sign-in user-page__content">
-        <form action="#" className="sign-in__form">
+        <form action="#" className="sign-in__form" onSubmit={handleFormSubmit}>
           <div className="sign-in__fields">
             <div className="sign-in__field">
               <input
@@ -68,7 +68,6 @@ function SingIn() {
             <button
               className="sign-in__btn"
               type="submit"
-              onSubmit={handleFormSubmit}
             >
               Sign in
             </button>

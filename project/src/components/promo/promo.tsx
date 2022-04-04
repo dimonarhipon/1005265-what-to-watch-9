@@ -1,23 +1,23 @@
-import {MouseEvent} from 'react';
 import { AppRoute } from '../../const';
 import { Link } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import User from '../../components/user/user';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeFavorite } from '../../store/api-action';
+import { loadPromoFilmAction, changeFavorite } from '../../store/api-action';
+import { useEffect } from 'react';
 
-/* eslint-disable no-console */
 function Promo() {
   const dispatch = useAppDispatch();
   const {promoFilm} = useAppSelector(({PROMO}) => PROMO);
 
-  const choiceFavoriteHandler = (evt: MouseEvent<HTMLElement>) => {
-    evt.preventDefault();
+  useEffect(() => {
+    dispatch(loadPromoFilmAction());
+  }, [dispatch, promoFilm]);
 
-    if (promoFilm?.id) {
+  const choiceFavoriteHandler = () => {
+    if (promoFilm) {
       const id = promoFilm.id.toString();
-      const status = promoFilm.isFavorite ? 1 : 0;
-      console.log(status, id);
+      const status = promoFilm.isFavorite ? 0 : 1;
 
       dispatch(changeFavorite({ status, id }));
     }

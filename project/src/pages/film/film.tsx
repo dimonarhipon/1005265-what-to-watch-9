@@ -16,6 +16,11 @@ function Film() {
   const MAX_FILMS = 4;
   const {id} = useParams();
   const dispatch = useAppDispatch();
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
+  const {film, similarFilms, isDataLoaded} = useAppSelector(({FILMS}) => FILMS);
+  let location = useLocation().hash.substr(1);
+  location = TabNames.Overview;
+  const [activeTab, setActiveTab] = useState(location);
 
   useEffect(() => {
     if (id) {
@@ -23,14 +28,6 @@ function Film() {
       dispatch(loadFilmSimilarAction(id));
     }
   }, [dispatch, id]);
-
-  const {authorizationStatus} = useAppSelector(({USER}) => USER);
-  const {film, similarFilms, isDataLoaded} = useAppSelector(({FILMS}) => FILMS);
-
-
-  let location = useLocation().hash.substr(1);
-  location = TabNames.Overview;
-  const [activeTab, setActiveTab] = useState(location);
 
   if (!film) {
     return <Loader />;
@@ -44,10 +41,10 @@ function Film() {
 
   const handleFavoriteClick = (evt: MouseEvent<HTMLElement>) => {
     evt.preventDefault();
-
     if (id) {
-      const status = film.isFavorite ? 1 : 0;
-      dispatch(changeFavorite({id, status}));
+      const status = film.isFavorite ? 0 : 1;
+
+      dispatch(changeFavorite({ status, id }));
     }
   };
 
