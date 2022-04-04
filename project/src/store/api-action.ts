@@ -77,7 +77,7 @@ export const loadFavofiteAction = createAsyncThunk('data/loadFavorite',
     }
   },
 );
-/* eslint-disable no-console */
+
 export const changeFavorite = createAsyncThunk('data/changeFavorite',
   async ({id, status}: FavoriteData) => {
     try {
@@ -87,7 +87,6 @@ export const changeFavorite = createAsyncThunk('data/changeFavorite',
       store.dispatch(loadPromoFilmAction());
 
       store.dispatch(postFavoriteSuccess());
-      console.log(id, status);
     } catch(error) {
       errorHandle(error);
     }

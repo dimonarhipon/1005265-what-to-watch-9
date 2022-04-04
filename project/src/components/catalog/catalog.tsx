@@ -15,7 +15,7 @@ function Catalog() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getGenreFilms(films));
-  }, [genreFilms]);
+  }, [dispatch, films]);
 
   const cardList = filteredFilms.slice(0, count);
 

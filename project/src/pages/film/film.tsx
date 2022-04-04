@@ -11,7 +11,6 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loadFilmAction, loadFilmSimilarAction, changeFavorite } from '../../store/api-action';
 import Footer from '../../components/footer/footer';
 
-/* eslint-disable no-console */
 function Film() {
   const MAX_FILMS = 4;
   const {id} = useParams();

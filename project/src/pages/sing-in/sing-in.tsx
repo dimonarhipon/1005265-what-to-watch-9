@@ -68,6 +68,7 @@ function SingIn() {
             <button
               className="sign-in__btn"
               type="submit"
+              disabled={email.length === 0 || password.length === 0}
             >
               Sign in
             </button>

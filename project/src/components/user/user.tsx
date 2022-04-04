@@ -15,7 +15,7 @@ function User() {
   return (
     <ul className="user-block">
       <li className="user-block__item">
-        <Link className="user-block__avatar" to={AppRoute.MyList}>
+        <Link className="user-block__avatar" to={AppRoute.MyList} style={{display: 'block'}}>
           <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
         </Link>
       </li>

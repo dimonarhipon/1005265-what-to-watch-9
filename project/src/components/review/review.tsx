@@ -9,13 +9,13 @@ const MAX_LENGTH_TEXT = 400;
 
 function Review() {
   const [comment, setComment] = useState('');
-  const [rating, setRating] = useState(1);
+  const [rating, setRating] = useState(0);
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
   const {id} = useParams();
 
-  const submitHandler = (evt: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (id) {
       dispatch(sendCommnetAction({id, comment, rating}));
@@ -25,19 +25,19 @@ function Review() {
     }
   };
 
-  const ratingChangeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
+  const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const {value} = evt.target;
     setRating(+value);
   };
 
-  const textChangeHandler = (evt: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleTextChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
     const {value} = evt.target;
     setComment(value);
   };
 
   return (
-    <form action="#" className="add-review__form" onSubmit={submitHandler}  >
-      <div className="rating" onChange={ratingChangeHandler}>
+    <form action="#" className="add-review__form" onSubmit={handleFormSubmit}  >
+      <div className="rating" onChange={handleRatingChange}>
         <div className="rating__stars" >
           <input className="rating__input" id="star-10" type="radio" name="rating" value="10" />
           <label className="rating__label" htmlFor="star-10">Rating 10</label>
@@ -77,14 +77,16 @@ function Review() {
           name="review-text"
           id="review-text"
           placeholder="Review text"
-          onChange={textChangeHandler}
+          onChange={handleTextChange}
           value={comment}
           minLength={MIN_LENGTH_TEXT}
           maxLength={MAX_LENGTH_TEXT}
         >
         </textarea>
         <div className="add-review__submit">
-          <button className="add-review__btn" type="submit">Post</button>
+          {comment.length > MIN_LENGTH_TEXT && comment.length < 400 && rating !== 0
+            ? <button className="add-review__btn" type="submit">Post</button>
+            : null}
         </div>
       </div>
     </form>

@@ -16,7 +16,7 @@ function AddReview() {
     if (id) {
       dispatch(loadFilmAction(id));
     }
-  }, [id]);
+  }, [dispatch, id]);
 
   const {film} = useAppSelector(({FILMS}) => FILMS);
 

@@ -7,7 +7,7 @@ const initialState: FavoriteProcess = {
   isDataLoaded: false,
   error: '',
 };
-/* eslint-disable no-console */
+
 export const favoriteProcess = createSlice({
   name: NameSpace.favorite,
   initialState,
@@ -30,7 +30,6 @@ export const favoriteProcess = createSlice({
     loadError: (state, action) => {
       state.error = action.payload;
       state.isDataLoaded = false;
-      console.log(state);
     },
   },
 });
