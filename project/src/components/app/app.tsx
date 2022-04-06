@@ -41,7 +41,12 @@ function App() {
 
           <Route path={AppRoute.Player} >
             <Route index element={<Player />} />
-            <Route path={AppRoute.Id} element={<Player /> } />
+            <Route path={AppRoute.Id} element={
+              <PrivateRoute>
+                <Player />
+              </PrivateRoute>
+            }
+            />
           </Route>
         </Route>
 

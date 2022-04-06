@@ -2,25 +2,20 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import {loadFilmAction} from '../../store/api-action';
+import {AppRoute} from '../../const';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import Loader from '../../components/loader/loader';
 dayjs.extend(duration);
-
+/* eslint-disable no-console */
 function Player() {
   const {id} = useParams();
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const {film} = useAppSelector(({FILMS}) => FILMS);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoCurrent = videoRef.current;
-
-  useEffect(() => {
-    if (id) {
-      dispatch(loadFilmAction(id));
-    }
-  }, [id, dispatch]);
-
 
   const [playerState, setPlayerState] = useState({
     isPlaying: true,
@@ -29,12 +24,24 @@ function Player() {
   });
 
   useEffect(() => {
+    if (id) {
+      dispatch(loadFilmAction(id));
+    }
+  }, [id, dispatch]);
+
+  useEffect(() => {
+    console.log(videoRef && videoCurrent, videoRef, videoCurrent);
+
     if (videoRef && videoCurrent) {
       playerState.isPlaying
         ? videoCurrent.play()
         : videoCurrent.pause();
     }
   }, [playerState.isPlaying, videoCurrent]);
+
+  if (!film) {
+    return <Loader />;
+  }
 
   const handlePlayToggle = () => {
     setPlayerState({
@@ -75,15 +82,9 @@ function Player() {
   };
 
   const handleExitClick = () => {
-    navigate(-1);
+    navigate(`${AppRoute.Films}/${id}`);
   };
 
-
-  const {film} = useAppSelector(({FILMS}) => FILMS);
-
-  if (!film) {
-    return <Loader />;
-  }
   const hours = dayjs.duration(film.runTime, 'minutes').format('HH');
   const minutes = dayjs.duration(film.runTime, 'minutes').format('mm');
   const seconds = dayjs.duration(film.runTime, 'second').format('ss');

@@ -6,7 +6,6 @@ import {AppRoute} from '../../const';
 
 const MIN_LENGTH_TEXT = 50;
 const MAX_LENGTH_TEXT = 400;
-
 function Review() {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(0);
@@ -14,6 +13,8 @@ function Review() {
 
   const navigate = useNavigate();
   const {id} = useParams();
+  const isSendForm =
+    comment.length > MIN_LENGTH_TEXT && comment.length < 400 && rating !== 0;
 
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -84,9 +85,7 @@ function Review() {
         >
         </textarea>
         <div className="add-review__submit">
-          {comment.length > MIN_LENGTH_TEXT && comment.length < 400 && rating !== 0
-            ? <button className="add-review__btn" type="submit">Post</button>
-            : null}
+          <button className="add-review__btn" type="submit" disabled={!isSendForm}>Post</button>
         </div>
       </div>
     </form>

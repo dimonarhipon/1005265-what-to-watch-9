@@ -1,6 +1,6 @@
 import {Genres} from '../../const';
 import { useAppDispatch } from '../../hooks';
-import { changeGenre, getGenreFilms } from '../../store/genre-process/genre-films-process';
+import { changeGenre, getGenreFilms } from '../../store/genre-process/genre-process';
 import {dataFilms} from '../../types/data';
 
 type typeProps = {

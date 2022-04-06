@@ -18,7 +18,7 @@ function CardList({films}: typeProps) {
     }, MOUSE_DELAY);
   };
 
-  const handleMouseLeave = (filmId: number): void => {
+  const handleMouseLeave = (): void => {
     if (timer) {
       clearTimeout(timer);
     }

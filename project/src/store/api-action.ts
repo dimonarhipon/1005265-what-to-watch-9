@@ -1,8 +1,8 @@
 import { AppRoute } from '../const';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import {api, store} from './index';
+import {api, store} from './store';
 import {redirectToRoute} from './action';
-import {getGenreFilms} from './genre-process/genre-films-process';
+import {getGenreFilms} from './genre-process/genre-process';
 import {requireAuthorization} from './user-process/user-process';
 import {loadFilmsSuccess, loadFilmsRequest, loadFilmSuccess, loadFilmRequest, loadFilmSimilarSuccess, loadFilmSimilarRequest, loadError} from './films-process/films-process';
 import {loadFavoriteSuccess, loadFavoriteRequest, postFavoriteRequest, postFavoriteSuccess} from './favorite-process/favorite-process';

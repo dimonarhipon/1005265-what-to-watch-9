@@ -6,7 +6,7 @@ function Footer() {
       <Logo isLight />
 
       <div className="copyright">
-        <p>© 2019 What to watch Ltd.</p>
+        <p>© 2022 What to watch Ltd.</p>
       </div>
     </footer>
   );

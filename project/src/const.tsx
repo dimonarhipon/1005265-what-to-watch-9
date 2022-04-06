@@ -31,13 +31,7 @@ export enum TabNames {
 
 export enum Genres {
   AllGenres = 'All genres',
-  Drama = 'Drama',
   Fantastic = 'Fantastic',
-  History = 'History',
-  Biography = 'Biography',
-  Thriller = 'Thriller',
-  Horror = 'Horror',
-  Western = 'Western',
 }
 
 export enum Rating {
@@ -54,10 +48,19 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export enum HTTP_CODE {
-  BAD_REQUEST = 400,
-  UNAUTHORIZED = 401,
-  NOT_FOUND = 404,
+export enum HttpCode {
+  BadRequest = 400,
+  Unautorized = 401,
+  NotFound = 404,
+}
+
+export enum NameSpace {
+  Genre = 'GENRE',
+  User = 'USER',
+  Films = 'FILMS',
+  Promo = 'PROMO',
+  Comments = 'COMMENTS',
+  Favorite = 'FAVORITE',
 }
 
 export type AuthData = {
@@ -83,15 +86,6 @@ export type FavoriteData = {
 }
 
 export type ErrorType = unknown;
-
-export enum NameSpace {
-  genre = 'GENRE',
-  user = 'USER',
-  films = 'FILMS',
-  promo = 'PROMO',
-  comments = 'COMMENTS',
-  favorite = 'FAVORITE',
-}
 
 export type FilmsProcess = {
   films: dataFilms,

@@ -1,9 +1,10 @@
 import Logo from '../../components/logo/logo';
-import { ChangeEvent, MouseEvent, useState } from 'react';
+import { useEffect, ChangeEvent, MouseEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-action';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import Footer from '../../components/footer/footer';
 
 function SingIn() {
   const [email, setEmail] = useState('');
@@ -11,14 +12,27 @@ function SingIn() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
+  const isAuthUser = authorizationStatus === AuthorizationStatus.Auth;
+
+  useEffect(() => {
+    if (isAuthUser) {
+      navigate(-1);
+    }
+  }, [navigate, isAuthUser]);
+
   const handleEmailChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const value = evt.target.value;
     setEmail(value);
+
+    // const regular = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
   };
 
   const handlePasswordChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const value = evt.target.value;
     setPassword(value);
+
+    // const regular = /^.*(?=.{2,})(?=.*\d)(?=.*[a-zA-Z]).*$/i;
   };
 
   const handleFormSubmit = (evt: MouseEvent<HTMLFormElement>) => {
@@ -76,13 +90,7 @@ function SingIn() {
         </form>
       </div>
 
-      <footer className="page-footer">
-        <Logo isLight />
-
-        <div className="copyright">
-          <p>© 2019 What to watch Ltd.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

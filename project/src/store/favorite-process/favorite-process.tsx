@@ -9,7 +9,7 @@ const initialState: FavoriteProcess = {
 };
 
 export const favoriteProcess = createSlice({
-  name: NameSpace.favorite,
+  name: NameSpace.Favorite,
   initialState,
   reducers: {
     loadFavoriteSuccess: (state, action) => {

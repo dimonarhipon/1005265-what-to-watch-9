@@ -10,7 +10,7 @@ const initialState: GenreProcess = {
 };
 
 export const genreProcess = createSlice({
-  name: NameSpace.genre,
+  name: NameSpace.Genre,
   initialState,
   reducers: {
     changeGenre: (state, action) => {

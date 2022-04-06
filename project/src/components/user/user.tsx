@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import {logoutAction} from '../../store/api-action';
+import { logoutAction } from '../../store/api-action';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 
 function User() {
@@ -14,21 +14,26 @@ function User() {
 
   return (
     <ul className="user-block">
-      <li className="user-block__item">
-        <Link className="user-block__avatar" to={AppRoute.MyList} style={{display: 'block'}}>
-          <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-        </Link>
-      </li>
-
       {authorizationStatus === AuthorizationStatus.Auth
         ? (
-          <Link to={AppRoute.Root} className="user-block__link" onClick={handleStatusClick}>
-            Sign out
-          </Link>
+          <>
+            <li className="user-block__item">
+              <Link className="user-block__avatar" to={AppRoute.MyList} style={{display: 'block'}}>
+                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+              </Link>
+            </li>
+            <li className="user-block__item">
+              <Link to={AppRoute.Root} className="user-block__link" onClick={handleStatusClick}>
+                Sign out
+              </Link>
+            </li>
+          </>
         ) : (
-          <Link to={AppRoute.Login} className="user-block__link">
-            Sign in
-          </Link>
+          <li className="user-block__item">
+            <Link to={AppRoute.Login} className="user-block__link">
+              Sign in
+            </Link>
+          </li>
         )}
     </ul>
   );

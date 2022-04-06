@@ -17,9 +17,10 @@ function Film() {
   const dispatch = useAppDispatch();
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
   const {film, similarFilms, isDataLoaded} = useAppSelector(({FILMS}) => FILMS);
-  let location = useLocation().hash.substr(1);
-  location = TabNames.Overview;
-  const [activeTab, setActiveTab] = useState(location);
+
+  let { hash } = useLocation();
+  hash = TabNames.Overview;
+  const [activeTab, setActiveTab] = useState(hash);
 
   useEffect(() => {
     if (id) {
@@ -129,7 +130,8 @@ function Film() {
                   </li>
                 </ul>
               </nav>
-              <Tabs activeTab={activeTab} film={film} />
+              {isDataLoaded ? <Loader />
+                : <Tabs activeTab={activeTab} film={film} />}
             </div>
           </div>
         </div>

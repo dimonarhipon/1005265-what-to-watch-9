@@ -9,7 +9,7 @@ const initialState: CommentsProcess = {
 };
 
 export const commentsProcess = createSlice({
-  name: NameSpace.comments,
+  name: NameSpace.Comments,
   initialState,
   reducers: {
     loadCommentsSuccess: (state, action) => {

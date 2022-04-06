@@ -13,19 +13,20 @@ const INITIAL_TIME = 0;
 
 function VideoPlayer({src, width, height, poster, isActive, muted = false}: Props) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const videoCurrent = videoRef.current;
   const pauseTime = useRef(INITIAL_TIME);
 
   useEffect(() => {
-    if (videoRef.current === null) {
+    if (videoCurrent === null) {
       return;
     }
 
     if (isActive) {
-      videoRef.current.currentTime = pauseTime.current;
-      videoRef.current.play();
+      videoCurrent.currentTime = pauseTime.current;
+      videoCurrent.play();
     } else {
-      pauseTime.current = videoRef.current.currentTime;
-      videoRef.current.load();
+      pauseTime.current = videoCurrent.currentTime;
+      videoCurrent.load();
     }
   }, [isActive]);
 
