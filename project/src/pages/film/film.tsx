@@ -4,7 +4,6 @@ import Logo from '../../components/logo/logo';
 import Loader from '../../components/loader/loader';
 import CardList from '../../components/card-list/card-list';
 import {Link, useParams} from 'react-router-dom';
-import {useLocation} from 'react-router-dom';
 import Tabs from '../../components/tabs/tabs';
 import User from '../../components/user/user';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -18,14 +17,14 @@ function Film() {
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
   const {film, similarFilms, isDataLoaded} = useAppSelector(({FILMS}) => FILMS);
 
-  let { hash } = useLocation();
-  hash = TabNames.Overview;
-  const [activeTab, setActiveTab] = useState(hash);
+  const [activeTab, setActiveTab] = useState(TabNames.Overview.toString());
+
 
   useEffect(() => {
     if (id) {
       dispatch(loadFilmAction(id));
       dispatch(loadFilmSimilarAction(id));
+      setActiveTab(TabNames.Overview.toString());
     }
   }, [dispatch, id]);
 

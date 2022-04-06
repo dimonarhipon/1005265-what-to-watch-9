@@ -25,21 +25,27 @@ function SingIn() {
     const value = evt.target.value;
     setEmail(value);
 
-    // const regular = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+    const regular = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+
+    if (regular.test(value)) {
+      setPassword(value);
+    }
   };
 
   const handlePasswordChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const value = evt.target.value;
     setPassword(value);
-
-    // const regular = /^.*(?=.{2,})(?=.*\d)(?=.*[a-zA-Z]).*$/i;
   };
 
   const handleFormSubmit = (evt: MouseEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    dispatch(loginAction({email, password}));
-    navigate(AppRoute.Root);
+    const regular = /\S*(\S*([a-zA-Z]\S*[0-9])|([0-9]\S*[a-zA-Z]))\S*/;
+
+    if (regular.test(password)) {
+      dispatch(loginAction({email, password}));
+      navigate(AppRoute.Root);
+    }
   };
 
   return (

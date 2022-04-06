@@ -18,6 +18,7 @@ function Review() {
 
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+
     if (id) {
       dispatch(sendCommnetAction({id, comment, rating}));
       setComment('');

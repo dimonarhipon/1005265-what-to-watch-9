@@ -30,14 +30,14 @@ function Player() {
   }, [id, dispatch]);
 
   useEffect(() => {
-    console.log(videoRef && videoCurrent, videoRef, videoCurrent);
+    console.log(videoRef && videoCurrent, videoRef, film);
 
     if (videoRef && videoCurrent) {
       playerState.isPlaying
         ? videoCurrent.play()
         : videoCurrent.pause();
     }
-  }, [playerState.isPlaying, videoCurrent]);
+  }, [playerState.isPlaying, videoCurrent, film]);
 
   if (!film) {
     return <Loader />;
