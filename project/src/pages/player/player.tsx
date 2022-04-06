@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import Loader from '../../components/loader/loader';
 dayjs.extend(duration);
-/* eslint-disable no-console */
+
 function Player() {
   const {id} = useParams();
   const navigate = useNavigate();
@@ -30,8 +30,6 @@ function Player() {
   }, [id, dispatch]);
 
   useEffect(() => {
-    console.log(videoRef && videoCurrent, videoRef, film);
-
     if (videoRef && videoCurrent) {
       playerState.isPlaying
         ? videoCurrent.play()
