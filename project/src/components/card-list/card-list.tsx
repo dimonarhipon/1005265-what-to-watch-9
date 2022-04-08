@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import Card from '../../components/card/card';
 import {dataFilms} from '../../types/data';
 
@@ -11,6 +11,16 @@ let timer: number | null = null;
 
 function CardList({films}: typeProps) {
   const [isActive, setActive] = useState<number | null>(null);
+  const [mount, setMount] = useState(false);
+
+  useEffect(() => {
+    setMount(true);
+    return () => setMount(false);
+  }, [mount]);
+
+  if(!mount) {
+    return null;
+  }
 
   const handleMouseEnter = (filmId: number): void => {
     timer = window.setTimeout(() => {

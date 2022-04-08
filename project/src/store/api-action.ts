@@ -4,7 +4,7 @@ import {api, store} from './store';
 import {redirectToRoute} from './action';
 import {getGenreFilms} from './genre-process/genre-process';
 import {requireAuthorization, loadDataLogin} from './user-process/user-process';
-import {loadFilmsSuccess, loadFilmsRequest, loadFilmSuccess, loadFilmRequest, loadFilmSimilarSuccess, loadFilmSimilarRequest, loadError} from './films-process/films-process';
+import {loadFilmsSuccess, loadFilmsRequest, loadFilmSuccess, loadFilmRequest, loadFilmSimilarSuccess, loadFilmSimilarRequest} from './films-process/films-process';
 import {loadFavoriteSuccess, loadFavoriteRequest, postFavoriteRequest, postFavoriteSuccess} from './favorite-process/favorite-process';
 import {loadCommentsSuccess, loadCommentsRequest, postCommentSuccess, postCommentRequest, postCommentError} from './comments-process/comments-process';
 import {loadPromoFilm} from './promo-film-process/promo-film-process';
@@ -35,7 +35,6 @@ export const loadFilmAction = createAsyncThunk('data/loadFiml',
       store.dispatch(loadFilmSuccess(data));
     } catch (error) {
       store.dispatch(redirectToRoute(AppRoute.Error));
-      store.dispatch(loadError(error));
       errorHandle(error);
     }
   },
@@ -48,7 +47,6 @@ export const loadFilmSimilarAction = createAsyncThunk('data/loadFimlSimilar',
       const {data} = await api.get<dataFilms>(`${APIRoute.Films}/${filmId}${APIRoute.Similar}`);
       store.dispatch(loadFilmSimilarSuccess(data));
     } catch (error) {
-      store.dispatch(loadError(error));
       errorHandle(error);
     }
   },
@@ -100,7 +98,6 @@ export const loadCommentsAction = createAsyncThunk('data/loadComments',
       const {data} = await api.get<dataComments>(`${APIRoute.Comments}/${filmId}`);
       store.dispatch(loadCommentsSuccess(data));
     } catch (error) {
-      store.dispatch(loadError(error));
       errorHandle(error);
     }
   },
