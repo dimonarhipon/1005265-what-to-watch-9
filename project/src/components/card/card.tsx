@@ -27,7 +27,7 @@ function Card({...props}: Props) {
       onMouseEnter={() => handleMouseEnter(id)}
       onMouseLeave={() => handleMouseLeave(id)}
     >
-      <div className="small-film-card__image">
+      <Link to={`${AppRoute.Films}/${id}`} className="small-film-card__image">
         <VideoPlayer
           src={previewVideoLink}
           width={width}
@@ -36,7 +36,7 @@ function Card({...props}: Props) {
           isActive={isActive}
           muted
         />
-      </div>
+      </Link>
 
       <h3 className="small-film-card__title">
         <Link to={`${AppRoute.Films}/${id}`} className="small-film-card__link">

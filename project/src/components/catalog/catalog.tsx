@@ -17,7 +17,7 @@ function Catalog() {
 
   useEffect(() => {
     dispatch(getGenreFilms(films));
-  }, [dispatch, films, filteredFilms]);
+  }, [dispatch, films]);
 
   const handlerShowMoreClick = (): void => {
     setCount(count + MAX_COUNT_FILMS);

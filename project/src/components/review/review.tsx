@@ -1,29 +1,36 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useState, FormEvent, ChangeEvent } from 'react';
-import { useAppDispatch } from '../../hooks';
-import {sendCommnetAction} from '../../store/api-action';
-import {AppRoute} from '../../const';
+import { useState, FormEvent, ChangeEvent, useEffect } from 'react';
+import { useAppDispatch, useAppSelector} from '../../hooks';
+import {postCommentAction} from '../../store/api-action';
+import {AppRoute, CommentPostStatus} from '../../const';
+import {postCommentRequest} from '../../store/comments-process/comments-process';
 
 const MIN_LENGTH_TEXT = 50;
 const MAX_LENGTH_TEXT = 400;
+
 function Review() {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(0);
   const dispatch = useAppDispatch();
+  const {commentPostStatus} = useAppSelector(({COMMENTS}) => COMMENTS);
 
   const navigate = useNavigate();
   const {id} = useParams();
   const isSendForm =
-    comment.length > MIN_LENGTH_TEXT && comment.length < 400 && rating !== 0;
+    comment.length > MIN_LENGTH_TEXT && comment.length < MAX_LENGTH_TEXT && rating !== 0;
+
+  useEffect(() => {
+    if (commentPostStatus === CommentPostStatus.Success) {
+      navigate(`${AppRoute.Films}/${id}`);
+      dispatch(postCommentRequest());
+    }
+  }, [id, navigate, commentPostStatus, dispatch]);
 
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (id) {
-      dispatch(sendCommnetAction({id, comment, rating}));
-      setComment('');
-      setRating(1);
-      navigate(`${AppRoute.Films}/${id}`);
+      dispatch(postCommentAction({id, comment, rating}));
     }
   };
 

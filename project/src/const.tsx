@@ -31,7 +31,7 @@ export enum TabNames {
 
 export enum Genres {
   AllGenres = 'All genres',
-  Fantastic = 'Fantastic',
+  Fantasy = 'Fantasy',
 }
 
 export enum Rating {
@@ -114,9 +114,23 @@ export type GenreProcess = {
 export type CommentsProcess = {
   comments: [],
   isDataLoaded: boolean,
+  commentPostStatus: string,
   error: string,
 }
 
 export type UserProcess = {
-  authorizationStatus: AuthorizationStatus
+  authorizationStatus: AuthorizationStatus,
+  user: {
+    avatarUrl: string,
+    email: string,
+    id: number,
+    name: string,
+    token: string,
+  }
 };
+
+export enum CommentPostStatus {
+  Unknown = 'UNKNOWN',
+  Success = 'SUCCESS',
+  Error = 'ERROR',
+}

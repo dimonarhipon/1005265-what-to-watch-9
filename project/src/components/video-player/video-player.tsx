@@ -28,7 +28,7 @@ function VideoPlayer({src, width, height, poster, isActive, muted = false}: Prop
       pauseTime.current = videoCurrent.currentTime;
       videoCurrent.load();
     }
-  }, [isActive]);
+  }, [videoCurrent, isActive]);
 
   return (
     <video

@@ -3,10 +3,10 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {api, store} from './store';
 import {redirectToRoute} from './action';
 import {getGenreFilms} from './genre-process/genre-process';
-import {requireAuthorization} from './user-process/user-process';
+import {requireAuthorization, loadDataLogin} from './user-process/user-process';
 import {loadFilmsSuccess, loadFilmsRequest, loadFilmSuccess, loadFilmRequest, loadFilmSimilarSuccess, loadFilmSimilarRequest, loadError} from './films-process/films-process';
 import {loadFavoriteSuccess, loadFavoriteRequest, postFavoriteRequest, postFavoriteSuccess} from './favorite-process/favorite-process';
-import {loadCommentsSuccess, loadCommentsRequest, postCommentSuccess, postCommentRequest} from './comments-process/comments-process';
+import {loadCommentsSuccess, loadCommentsRequest, postCommentSuccess, postCommentRequest, postCommentError} from './comments-process/comments-process';
 import {loadPromoFilm} from './promo-film-process/promo-film-process';
 import { APIRoute, AuthorizationStatus, AuthData, UserData, CommentData, FavoriteData } from '../const';
 import {dataFilm, dataFilms, dataComments} from '../types/data';
@@ -106,13 +106,14 @@ export const loadCommentsAction = createAsyncThunk('data/loadComments',
   },
 );
 
-export const sendCommnetAction = createAsyncThunk('data/sendComment',
+export const postCommentAction = createAsyncThunk('data/sendComment',
   async ({id, rating, comment}: CommentData) => {
     try {
       store.dispatch(postCommentRequest());
       await api.post<CommentData>(`${APIRoute.Comments}/${id}`, {rating, comment});
       store.dispatch(postCommentSuccess());
     } catch(error) {
+      store.dispatch(postCommentError(error));
       errorHandle(error);
     }
   },
@@ -121,8 +122,9 @@ export const sendCommnetAction = createAsyncThunk('data/sendComment',
 export const checkAuthAction = createAsyncThunk('user/requireAuthorization',
   async () => {
     try {
-      await api.get<string>(APIRoute.Login);
+      const {data} = await api.get<string>(APIRoute.Login);
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      store.dispatch(loadDataLogin(data));
     } catch(error) {
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
       errorHandle(error);

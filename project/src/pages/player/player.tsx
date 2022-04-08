@@ -12,15 +12,13 @@ function Player() {
   const {id} = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const {film} = useAppSelector(({FILMS}) => FILMS);
-
+  const {film, isDataLoaded} = useAppSelector(({FILMS}) => FILMS);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const videoCurrent = videoRef.current;
 
   const [playerState, setPlayerState] = useState({
     isPlaying: true,
     progress: 0,
-    videoDuration: videoCurrent?.duration,
+    videoDuration: videoRef.current?.duration,
   });
 
   useEffect(() => {
@@ -30,12 +28,25 @@ function Player() {
   }, [id, dispatch]);
 
   useEffect(() => {
-    if (videoRef && videoCurrent) {
+    if (videoRef.current) {
+
+      const playPromise = videoRef.current.play();
+
+      if (playPromise !== undefined && videoRef.current) {
+        playPromise.then(() => {
+          playerState.isPlaying
+            ? videoRef.current?.play()
+            : videoRef.current?.pause();
+        });
+      }
+
       playerState.isPlaying
-        ? videoCurrent.play()
-        : videoCurrent.pause();
+        ? videoRef.current?.play()
+        : videoRef.current?.pause();
     }
-  }, [playerState.isPlaying, videoCurrent, film]);
+
+  }, [isDataLoaded, playerState.isPlaying, videoRef, film]);
+
 
   if (!film) {
     return <Loader />;
@@ -49,23 +60,23 @@ function Player() {
   };
 
   const handleTimeUpdate = () => {
-    if (videoRef && videoCurrent) {
-      const progress = (videoCurrent.currentTime / videoCurrent.duration) * 100;
+    if (videoRef && videoRef.current) {
+      const progress = (videoRef.current.currentTime / videoRef.current.duration) * 100;
 
       setPlayerState({
         ...playerState,
-        videoDuration: videoCurrent.duration - videoCurrent.currentTime,
+        videoDuration: videoRef.current.duration - videoRef.current.currentTime,
         progress,
       });
     }
   };
 
   const handleVideoProgress = (evt: React.FormEvent<HTMLProgressElement>) => {
-    if (videoRef && videoCurrent) {
+    if (videoRef && videoRef.current) {
       const target = evt.target as HTMLProgressElement;
       const time = Number(target.value);
 
-      videoCurrent.currentTime = (videoCurrent.duration / 100) * time;
+      videoRef.current.currentTime = (videoRef.current.duration / 100) * time;
       setPlayerState({
         ...playerState,
         progress: time,
@@ -74,8 +85,8 @@ function Player() {
   };
 
   const handleFullScreenClick = () => {
-    if (videoRef && videoCurrent) {
-      videoCurrent.requestFullscreen();
+    if (videoRef && videoRef.current) {
+      videoRef.current.requestFullscreen();
     }
   };
 
@@ -83,9 +94,11 @@ function Player() {
     navigate(`${AppRoute.Films}/${id}`);
   };
 
-  const hours = dayjs.duration(film.runTime, 'minutes').format('HH');
-  const minutes = dayjs.duration(film.runTime, 'minutes').format('mm');
-  const seconds = dayjs.duration(film.runTime, 'second').format('ss');
+  const durationFilm = dayjs.duration(playerState.videoDuration || film.runTime, 'seconds');
+
+  const formatedDurationFilm = durationFilm.asHours() >= 1
+    ? durationFilm.format('-HH:mm:ss')
+    : durationFilm.format('-mm:ss');
 
   return (
     <div className="player">
@@ -94,6 +107,7 @@ function Player() {
         className="player__video"
         poster={film.backgroundImage}
         onTimeUpdate={handleTimeUpdate}
+        autoPlay
       >
         <source src={film.videoLink} />
       </video>
@@ -120,7 +134,9 @@ function Player() {
               Toggler
             </div>
           </div>
-          <div className="player__time-value">-{hours}:{minutes}:{seconds}</div>
+          <div className="player__time-value">
+            {formatedDurationFilm}
+          </div>
         </div>
         <div className="player__controls-row">
           <button onClick={handlePlayToggle} type="button" className="player__play">

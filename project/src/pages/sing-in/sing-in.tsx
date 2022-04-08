@@ -9,6 +9,8 @@ import Footer from '../../components/footer/footer';
 function SingIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -21,32 +23,42 @@ function SingIn() {
     }
   }, [navigate, isAuthUser]);
 
+  const regularValidate = /\S*(\S*([a-zA-Z]\S*[0-9])|([0-9]\S*[a-zA-Z]))\S*/;
+  const regularEmail = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+
   const handleEmailChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const value = evt.target.value;
     setEmail(value);
 
-    const regular = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-
-    if (regular.test(value)) {
-      setPassword(value);
+    if (regularEmail.test(value) && regularValidate.test(value)) {
+      setEmailError(true);
+    } else {
+      setEmailError(false);
     }
   };
 
   const handlePasswordChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const value = evt.target.value;
     setPassword(value);
+
+    if (regularValidate.test(value)) {
+      setPasswordError(true);
+    } else {
+      setPasswordError(false);
+    }
   };
 
   const handleFormSubmit = (evt: MouseEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    const regular = /\S*(\S*([a-zA-Z]\S*[0-9])|([0-9]\S*[a-zA-Z]))\S*/;
-
-    if (regular.test(password)) {
+    if (regularValidate.test(password)) {
       dispatch(loginAction({email, password}));
       navigate(AppRoute.Root);
     }
   };
+
+  const isValidForm =
+  emailError && passwordError && email.length > 0 && password.length > 0;
 
   return (
     <div className="user-page">
@@ -59,7 +71,17 @@ function SingIn() {
       <div className="sign-in user-page__content">
         <form action="#" className="sign-in__form" onSubmit={handleFormSubmit}>
           <div className="sign-in__fields">
-            <div className="sign-in__field">
+            {!emailError && email.length > 0 ? (
+              <div className="sign-in__message">
+                <p>Please enter a valid email address min 1 string and min 1 number and @</p>
+              </div>
+            ) : null}
+            {!passwordError && password.length > 0 ? (
+              <div className="sign-in__message">
+                <p>Please enter a valid password address address min 1 string and min 1 number</p>
+              </div>
+            ) : null}
+            <div className={`sign-in__field ${!emailError ? 'sign-in__field--error' : ''}`}>
               <input
                 className="sign-in__input"
                 type="email"
@@ -71,7 +93,7 @@ function SingIn() {
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
             </div>
-            <div className="sign-in__field">
+            <div className={`sign-in__field ${!passwordError ? 'sign-in__field--error' : ''}`}>
               <input
                 className="sign-in__input"
                 type="password"
@@ -86,9 +108,12 @@ function SingIn() {
           </div>
           <div className="sign-in__submit">
             <button
+              style={{
+                opacity: !isValidForm ? '0.3' : '1',
+              }}
               className="sign-in__btn"
               type="submit"
-              disabled={email.length === 0 || password.length === 0}
+              disabled={!isValidForm}
             >
               Sign in
             </button>

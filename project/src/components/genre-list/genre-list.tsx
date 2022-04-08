@@ -8,6 +8,9 @@ type typeProps = {
   currentGenre: string,
 };
 
+const MAX_COUNT_GENGERS = 10;
+const MIN_COUNT_GENGERS = 0;
+
 function GenreList ({films, currentGenre}: typeProps) {
   const dispatch = useAppDispatch();
   const genres = films.map((film) => film.genre);
@@ -39,7 +42,7 @@ function GenreList ({films, currentGenre}: typeProps) {
               {genre}
             </button>
           </li>);
-      })}
+      }).slice(MIN_COUNT_GENGERS, MAX_COUNT_GENGERS)}
     </ul>
   );
 }

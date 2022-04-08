@@ -5,7 +5,7 @@ import { useAppSelector, useAppDispatch } from '../../hooks';
 
 function User() {
   const dispatch = useAppDispatch();
-  const {authorizationStatus} = useAppSelector(({USER}) => USER);
+  const {authorizationStatus, user} = useAppSelector(({USER}) => USER);
 
   const handleStatusClick = (evt: React.MouseEvent<HTMLElement>) => {
     evt.preventDefault();
@@ -19,7 +19,7 @@ function User() {
           <>
             <li className="user-block__item">
               <Link className="user-block__avatar" to={AppRoute.MyList} style={{display: 'block'}}>
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                <img src={user?.avatarUrl} alt={user?.name} width="63" height="63" />
               </Link>
             </li>
             <li className="user-block__item">
