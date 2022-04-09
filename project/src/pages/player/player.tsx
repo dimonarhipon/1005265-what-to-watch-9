@@ -108,6 +108,7 @@ function Player() {
         poster={film.backgroundImage}
         onTimeUpdate={handleTimeUpdate}
         autoPlay
+        muted
       >
         <source src={film.videoLink} />
       </video>
