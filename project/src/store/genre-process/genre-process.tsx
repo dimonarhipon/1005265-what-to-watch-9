@@ -6,7 +6,6 @@ import { dataFilm } from '../../types/data';
 const initialState: GenreProcess = {
   filteredFilms: [],
   genreFilms: Genres.AllGenres.toString(),
-  error: '',
 };
 
 export const genreProcess = createSlice({
@@ -20,9 +19,6 @@ export const genreProcess = createSlice({
       state.filteredFilms = state.genreFilms === Genres.AllGenres
         ? action.payload
         : action.payload.filter((item: dataFilm) => item.genre === state.genreFilms);
-    },
-    setError: (state, action) => {
-      state.error = action.payload;
     },
   },
 });

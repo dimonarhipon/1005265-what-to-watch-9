@@ -6,7 +6,6 @@ const initialState: FilmsProcess = {
   film: null,
   similarFilms: [],
   isDataLoaded: false,
-  error: '',
 };
 
 export const filmsProcess = createSlice({
@@ -35,11 +34,6 @@ export const filmsProcess = createSlice({
     },
     loadFilmRequest: (state) => {
       state.isDataLoaded = true;
-    },
-
-    loadError: (state, action) => {
-      state.error = action.payload;
-      state.isDataLoaded = false;
     },
   },
 });

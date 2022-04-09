@@ -5,7 +5,6 @@ import {FavoriteProcess} from '../../const';
 const initialState: FavoriteProcess = {
   favorite: [],
   isDataLoaded: false,
-  error: '',
 };
 
 export const favoriteProcess = createSlice({
@@ -25,11 +24,6 @@ export const favoriteProcess = createSlice({
     },
     postFavoriteRequest: (state) => {
       state.isDataLoaded = true;
-    },
-
-    loadError: (state, action) => {
-      state.error = action.payload;
-      state.isDataLoaded = false;
     },
   },
 });

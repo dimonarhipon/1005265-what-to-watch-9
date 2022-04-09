@@ -92,13 +92,11 @@ export type FilmsProcess = {
   isDataLoaded: boolean,
   film: dataFilm | null,
   similarFilms: dataFilms,
-  error: string,
 }
 
 export type FavoriteProcess = {
   favorite: dataFilms,
   isDataLoaded: boolean,
-  error: string,
 }
 
 export type PromoFilmProcess = {
@@ -108,7 +106,6 @@ export type PromoFilmProcess = {
 export type GenreProcess = {
   filteredFilms: dataFilms,
   genreFilms: string,
-  error: string,
 };
 
 export type CommentsProcess = {
