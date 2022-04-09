@@ -1,6 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {NameSpace} from '../../const';
-import {FilmsProcess} from '../../const';
+import {NameSpace, FilmsProcess} from '../../const';
 
 const initialState: FilmsProcess = {
   films: [],
@@ -52,5 +51,4 @@ export const {
   loadFilmRequest,
   loadFilmSimilarSuccess,
   loadFilmSimilarRequest,
-  loadError,
 } = filmsProcess.actions;

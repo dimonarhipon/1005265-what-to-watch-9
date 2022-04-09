@@ -27,4 +27,4 @@ export const genreProcess = createSlice({
   },
 });
 
-export const {changeGenre, setError, getGenreFilms} = genreProcess.actions;
+export const {changeGenre, getGenreFilms} = genreProcess.actions;

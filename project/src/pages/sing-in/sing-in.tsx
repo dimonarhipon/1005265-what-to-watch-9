@@ -9,8 +9,8 @@ import Footer from '../../components/footer/footer';
 function SingIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
+  const [emailError, setEmailError] = useState(true);
+  const [passwordError, setPasswordError] = useState(true);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -30,7 +30,7 @@ function SingIn() {
     const value = evt.target.value;
     setEmail(value);
 
-    if (regularEmail.test(value) && regularValidate.test(value)) {
+    if (regularEmail.test(value)) {
       setEmailError(true);
     } else {
       setEmailError(false);
@@ -73,7 +73,7 @@ function SingIn() {
           <div className="sign-in__fields">
             {!emailError && email.length > 0 ? (
               <div className="sign-in__message">
-                <p>Please enter a valid email address min 1 string and min 1 number and @</p>
+                <p>Please enter a valid email address min 1 string and @</p>
               </div>
             ) : null}
             {!passwordError && password.length > 0 ? (

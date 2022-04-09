@@ -39,5 +39,4 @@ export const {
   loadFavoriteRequest,
   postFavoriteSuccess,
   postFavoriteRequest,
-  loadError,
 } = favoriteProcess.actions;
